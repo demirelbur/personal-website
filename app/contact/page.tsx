@@ -1,0 +1,56 @@
+import { Section } from "@/components/layout/Section";
+import { Button } from "@/components/ui/Button";
+import { SocialIcons } from "@/components/ui/SocialIcons";
+import { profile } from "@/content/profile";
+import { copy } from "@/content/copy";
+
+export const metadata = {
+  title: `Contact — ${profile.name}`,
+};
+
+export default function ContactPage() {
+  const labels = copy.pages.contact.labels;
+
+  return (
+    <div className="pt-[72px]">
+      <Section>
+        <div className="max-w-2xl">
+          <h1 className="text-[36px] md:text-[40px] md:leading-[48px] font-bold tracking-tight">
+            {copy.pages.contact.title}
+          </h1>
+
+          <p className="mt-6 text-lg text-text-secondary">
+            {copy.pages.contact.subtitle}
+          </p>
+
+          <div className="mt-12 space-y-8">
+            <div>
+              <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
+                {labels.email}
+              </h2>
+              <a
+                href={`mailto:${profile.email}`}
+                className="text-text-primary hover:text-accent transition-colors duration-[var(--duration-fast)]"
+              >
+                {profile.email}
+              </a>
+            </div>
+
+            <div>
+              <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
+                {labels.social}
+              </h2>
+              <SocialIcons />
+            </div>
+
+            <div className="pt-4">
+              <Button href={`mailto:${profile.email}`}>
+                {copy.pages.contact.cta}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}

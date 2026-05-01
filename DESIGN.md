@@ -1,0 +1,488 @@
+# DESIGN.md
+
+Design system & implementation guide for personal website.
+
+---
+
+## 1. Overview
+
+This document defines the design system, visual language, components, layout, content structure, interactions, and implementation guidelines for the personal website of an ML engineer and researcher.
+
+**Goal:** Build a modern, fast, accessible and content-focused website that communicates research depth, engineering skills and clear thinking.
+
+---
+
+## 2. Design Tokens
+
+### 2.1 Colors
+
+Use CSS variables with a two-layer architecture for theme switching:
+- `@theme` block maps Tailwind utilities to runtime `var()` references
+- `:root` defines dark (default) values
+- `html[data-theme="light"]` overrides for light mode
+
+#### Background
+
+| Token            | Dark      | Light     |
+| ---------------- | --------- | --------- |
+| `--bg-primary`   | `#0B0B0C` | `#FFFFFF` |
+| `--bg-secondary` | `#111113` | `#F5F5F7` |
+| `--bg-elevated`  | `#17171A` | `#EBEBEF` |
+
+#### Text
+
+| Token              | Dark      | Light     |
+| ------------------ | --------- | --------- |
+| `--text-primary`   | `#FFFFFF` | `#0B0B0C` |
+| `--text-secondary` | `#B3B3B8` | `#4A4A52` |
+| `--text-muted`     | `#6F6F76` | `#8A8A94` |
+
+#### Border
+
+| Token            | Dark      | Light     |
+| ---------------- | --------- | --------- |
+| `--border-color` | `#1F1F23` | `#E0E0E4` |
+
+#### Accent
+
+| Token              | Value                      |
+| ------------------ | -------------------------- |
+| `--accent`         | `#7C3AED`                  |
+| `--accent-hover`   | `#A78BFA`                  |
+| `--accent-soft`    | `rgba(124,58,237,0.12)` (dark) / `rgba(124,58,237,0.08)` (light) |
+| `--accent-blue`    | `#4F8CFF`                  |
+| `--accent-purple`  | `#A855F7`                  |
+
+> **Gradient accent:** The hero headline uses `bg-gradient-to-r from-accent-blue to-accent-purple` for a blue-to-purple gradient effect.
+
+#### Semantic
+
+| Token       | Value     |
+| ----------- | --------- |
+| `--success` | `#22C55E` |
+| `--warning` | `#F59E0B` |
+| `--error`   | `#EF4444` |
+| `--info`    | `#22D3EE` |
+
+---
+
+### 2.2 Spacing (8px Grid)
+
+Use multiples of 8.
+
+| Token        | Value  |
+| ------------ | ------ |
+| `--space-1`  | 4px    |
+| `--space-2`  | 8px    |
+| `--space-3`  | 16px   |
+| `--space-4`  | 24px   |
+| `--space-5`  | 32px   |
+| `--space-6`  | 48px   |
+| `--space-7`  | 64px   |
+| `--space-8`  | 96px   |
+| `--space-9`  | 128px  |
+
+> **Important:** These tokens override Tailwind's default spacing scale. Tailwind utilities like `w-9`, `h-9`, `gap-9` will resolve to `128px`, NOT the default `2.25rem`. When Tailwind's default scale is needed for small fixed sizes, use explicit pixel values (e.g., `w-[36px]`).
+
+---
+
+### 2.3 Typography
+
+#### Fonts
+
+```css
+--font-display: "Satoshi", "Space Grotesk", sans-serif;
+--font-body: "Inter", "Geist", system-ui, sans-serif;
+--font-mono: "JetBrains Mono", monospace;
+```
+
+Loaded via `next/font/google`: Inter, Space Grotesk, JetBrains Mono.
+
+#### Type Scale (Desktop)
+
+| Style        | Size / Line height | Weight |
+| ------------ | ------------------ | ------ |
+| H1           | 64px / 72px        | 700    |
+| H2           | 40px / 48px        | 600    |
+| H3           | 28px / 36px        | 500    |
+| H4           | 22px / 30px        | 500    |
+| Body (base)  | 16px / 26px        | 400    |
+| Small        | 14px / 22px        | 400    |
+| Caption      | 12px / 18px        | 400    |
+
+---
+
+### 2.4 Radius & Shadow
+
+#### Border Radius
+
+```css
+--radius-sm: 6px;
+--radius-md: 12px;
+--radius-lg: 16px;
+```
+
+#### Shadows
+
+Dark:
+```css
+--shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+--shadow-md: 0 8px 24px rgba(0,0,0,0.35);
+--shadow-lg: 0 16px 48px rgba(0,0,0,0.45);
+```
+
+Light:
+```css
+--shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+--shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+--shadow-lg: 0 16px 48px rgba(0,0,0,0.16);
+```
+
+---
+
+### 2.5 Motion
+
+#### Durations
+
+```css
+--duration-fast: 160ms;
+--duration-base: 240ms;
+--duration-slow: 400ms;
+```
+
+#### Easing
+
+```css
+--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+```
+
+#### Shared Motion Config (`lib/motion.ts`)
+
+All Framer Motion animations are centralized in `lib/motion.ts`:
+- `ease` — the easing array `[0.16, 1, 0.3, 1]`
+- `fadeInUp` — initial load animation (opacity + y)
+- `fadeIn` — opacity-only fade
+- `viewportFadeInUp` — scroll-triggered fade-in-up
+- `staggeredFadeInUp(delay)` — staggered scroll-triggered fade
+
+#### Use
+
+- Fade-in on scroll (viewport-triggered, once)
+- Hover lift (2–4px via `hover:-translate-y-0.5` or `hover:-translate-y-1`)
+- Button feedback
+- Staggered list reveals (0.06s delay between items)
+
+#### Avoid
+
+- Scroll hijacking
+- Heavy animations
+- Looping or decorative motion
+
+---
+
+### 2.6 Breakpoints
+
+Mobile First approach.
+
+| Name | Min width | Columns |
+| ---- | --------- | ------- |
+| sm   | 0px       | 4       |
+| md   | 768px     | 8       |
+| lg   | 1024px    | 12      |
+| xl   | 1280px    | 12      |
+
+---
+
+## 3. Layout
+
+### 3.1 Container
+
+- Max width: 1280px
+- Horizontal padding:
+  - sm: 16px (`px-4`)
+  - md: 24px (`md:px-6`)
+  - lg+: 32px (`lg:px-8`)
+- Auto margin on left and right.
+- Implemented as reusable `Container` component.
+
+### 3.2 Grid
+
+- 12-column grid on desktop (lg, xl).
+- Gutter: 24px.
+- Hero uses `md:grid-cols-12` with 7/5 split.
+- Project grid uses `md:grid-cols-2`.
+
+### 3.3 Section Spacing
+
+Use vertical padding. Implemented as reusable `Section` component.
+
+- Desktop: `lg:py-32` (128px)
+- Tablet: `md:py-16` (64px)
+- Mobile: `py-12` (48px)
+
+### 3.4 Safe Area
+
+Respect `safe-area-inset` for mobile notch devices via `@supports` in globals.css.
+
+---
+
+## 4. Components
+
+### 4.1 Buttons (`components/ui/Button.tsx`)
+
+Three variants:
+
+#### Primary
+
+- Background: `--accent`
+- Text: white
+- Border radius: `--radius-sm`
+- Hover: `--accent-hover`, translate-y -2px
+- Shadow: `--shadow-sm`
+
+#### Secondary
+
+- Background: transparent
+- Border: 1px solid `--border`
+- Text: `--text-secondary`
+- Hover: border `--text-muted`, text `--text-primary`, translate-y -2px
+
+#### Text
+
+- Text: `--accent`
+- No background or border
+- Auto-appends `→` arrow
+- Hover: `--accent-hover`
+
+### 4.2 Card (Project) (`components/ui/ProjectCard.tsx`)
+
+- Border: 1px solid `--border`
+- Background: `--bg-secondary`
+- Border radius: `--radius-md`
+- Padding: 24px
+- Hover: background `--bg-elevated`, translate-y -4px, shadow `--shadow-md`
+- Scroll-triggered fade-in via `viewportFadeInUp`
+
+Content structure:
+- Icon (40×40, rounded `--radius-sm`, background `--accent-soft`)
+- Title (font-semibold, group-hover accent)
+- Description (text-secondary, small size)
+- Tech tags (Badge components)
+- Outcome (text-muted, xs)
+- "Case study →" on hover (opacity transition)
+
+### 4.3 Navbar (`components/layout/Navbar.tsx`)
+
+- Height: 72px
+- Background: transparent (blur on scroll)
+- Sticky on scroll, z-50
+- Logo: `{profile.initials}.` with accent dot (from content)
+- Links: from `content/navigation.ts`
+- Right side: theme toggle icon
+- Mobile: hamburger menu with slide-down panel
+
+### 4.4 Badges / Tags (`components/ui/Badge.tsx`)
+
+- Background: `--bg-primary`
+- Border: 1px solid `--border`
+- Text: `--text-muted`
+- Border radius: `--radius-sm`
+- Padding: 4px 10px
+- Font size: 12px
+
+### 4.5 Code Block (`components/ui/CodeBlock.tsx`)
+
+- Background: `--bg-secondary`
+- Border: 1px solid `--border`
+- Border radius: `--radius-md`
+- Padding: 20px
+- Font: `--font-mono`
+- Line numbers in `--text-muted` (zero-padded)
+- Keywords highlighted in `--accent`
+- Shadow: `--shadow-md`
+
+### 4.6 Publication Item (`components/ui/PublicationItem.tsx`)
+
+- Title (font-medium, text-primary, group-hover accent)
+- Authors (optional, text-muted, truncated)
+- Summary (text-muted, 1 line clamp)
+- Venue badge (accent-soft background, accent text, `--radius-sm`)
+- Year (text-muted)
+- Arrow link → (accent)
+- Hover: background elevated, translate-y -2px
+- Staggered scroll-triggered animation
+
+### 4.7 Social Icons (`components/ui/SocialIcons.tsx`)
+
+- Size: 20px icon inside 36×36px hit target
+- Container: explicit `w-[36px] h-[36px]` (avoids spacing token override)
+- Color: `--text-muted`
+- Hover: `--text-primary`, background `--bg-elevated`
+- Border radius: `--radius-sm`
+- Platforms: GitHub, LinkedIn, Google Scholar, Email (from `content/social.ts`)
+
+### 4.8 Theme Toggle
+
+- Sun icon (in dark mode) / Moon icon (in light mode)
+- Border radius: `--radius-sm`
+- Background on hover: `--bg-elevated`
+- Persists to `localStorage` via `ThemeProvider` (`lib/theme.tsx`)
+- Toggles `data-theme` attribute on `<html>` element
+
+### 4.9 Section Heading (`components/ui/SectionHeading.tsx`)
+
+- Title: H2 scale (text-2xl → md:text-[40px])
+- Subtitle: text-sm, text-secondary
+- Margin bottom: 32px
+
+### 4.10 FadeIn (`components/ui/FadeIn.tsx`)
+
+- Reusable scroll-triggered fade wrapper
+- Uses centralized `ease` from `lib/motion.ts`
+- Supports custom delay
+
+---
+
+## 5. Architecture
+
+### 5.1 Content/Design Separation
+
+Strict separation between HOW things look and WHAT is shown:
+
+```
+/content          ← Single source of truth for all displayed text
+  profile.ts        Name, role, headline, bio, focus areas, stats, email
+  projects.ts       Projects with problem/solution/impact
+  publications.ts   Research papers, patents with authors, venue, year (types: journal, conference, preprint, techreport, patent)
+  writing.ts        Blog posts
+  experience.ts     Work history + education
+  social.ts         Social links
+  navigation.ts     Nav items
+  copy.ts           All UI copy (section headings, button labels, page text, footer)
+
+/components       ← Zero hardcoded text
+  /layout           Container, Section, Navbar, Footer
+  /home             Hero, SelectedProjects, ResearchPreview, WritingPreview, AboutPreview, ContactCTA
+  /ui               Button, Badge, ProjectCard, PublicationItem, CodeBlock, SocialIcons, FadeIn, SectionHeading
+
+/lib              ← Shared utilities
+  motion.ts         Centralized Framer Motion configs
+  theme.tsx         ThemeProvider + useTheme hook (context, localStorage, data-theme toggle)
+
+/app              ← Routes (compose layout + content)
+```
+
+### 5.2 Rules
+
+- Components receive data via imports from `/content/*`
+- Zero hardcoded English text in components or pages
+- UI labels and section copy live in `content/copy.ts`
+- Motion configs live in `lib/motion.ts`
+- Design tokens in `globals.css` map 1:1 to this document
+
+---
+
+## 6. Pages & Sections
+
+### Homepage Layout
+
+1. Navbar
+2. Hero
+3. Selected Projects
+4. Research / Publications
+5. Writing
+6. About
+7. Contact CTA
+8. Footer
+
+### Hero Section
+
+#### Left Column (7/12 grid)
+
+- Role label (caption, accent, uppercase, tracking-widest) — from `profile.role`
+- Headline with accent phrase — from `profile.headline` + `profile.headlineAccent`
+- Supporting text — from `profile.summary`
+- CTA buttons — labels from `copy.hero.cta`
+- Staggered fade-in-up on load (0.1s delay between elements)
+
+#### Right Column (5/12 grid)
+
+- Code snippet card (CodeBlock) — domain-relevant pseudocode
+- Stats card — papers/patents/citations from `profile.stats`
+
+### About Page
+
+- Profile image (`public/burak_demirel.jpg`, 120×120, rounded `--radius-lg`)
+- Bio paragraphs from `profile.bio`
+- Focus areas from `profile.focusAreas`
+- Experience from `experience.ts`
+- Education from `experience.ts`
+
+### Other Pages
+
+- `/projects` — grid of project cards
+- `/projects/[slug]` — full case study (problem, solution, impact)
+- `/research` — grouped by type (book, preprints, journals, conferences, patents)
+- `/writing` — list of post entries
+- `/writing/[slug]` — full article (MDX-ready)
+- `/about` — photo, bio, experience, education
+- `/contact` — email, social links
+
+---
+
+## 7. Content Rules
+
+### Hero must answer:
+
+- Who you are
+- What you do
+- Why it matters
+
+### Projects must include:
+
+- Problem
+- Solution
+- Impact (measured outcome, MANDATORY)
+
+### Avoid:
+
+- Generic phrases ("passionate about technology")
+- Empty visuals
+- Over-design
+- Placeholder text
+
+---
+
+## 8. Accessibility
+
+- High contrast text (WCAG AA minimum)
+- Keyboard navigation
+- Focus states: `2px solid --accent`, offset 2px
+- Semantic HTML (header, nav, main, article, section, footer)
+- Reduced motion support via `prefers-reduced-motion`
+- `safe-area-inset` for notch devices
+- `aria-label` on icon-only buttons and links
+
+---
+
+## 9. Tech Stack
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4 (`@tailwindcss/postcss`, `@theme` with runtime CSS variable references for theme switching)
+- Framer Motion
+- MDX support via `@next/mdx`
+- Vercel deployment (zero config)
+
+---
+
+## 10. Success Criteria
+
+The site is successful if:
+
+- A user understands your profile in < 5 seconds
+- Projects communicate real measured impact
+- Navigation is obvious
+- Performance is fast (LCP < 2.5s, CLS < 0.1)
+- Design feels intentional, not trendy
+- All content can be updated by editing `/content/*.ts` files only
