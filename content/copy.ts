@@ -9,7 +9,7 @@ export const copy = {
       secondary: "Read Research",
     },
     stats: {
-      papers: "Papers",
+      papers: "Publications",
       patents: "Patents",
       citations: "Citations",
     },
@@ -18,7 +18,7 @@ export const copy = {
     projects: {
       title: "Selected Projects",
       subtitle:
-        "Production ML systems I've designed, built, and shipped under real-world constraints.",
+        "Production-scale AI systems designed and deployed under real-world constraints.",
       viewAll: "View all projects",
     },
     research: {
@@ -56,7 +56,7 @@ export const copy = {
         "25+ peer-reviewed papers in machine learning, control, and optimization. 500+ citations.",
       categories: {
         book: "Book",
-        recent: "Recent & Preprints",
+        recent: "Preprints",
         journal: "Journal Publications",
         conference: "Conference Publications",
         patents: "Patents",
@@ -90,7 +90,7 @@ export const copy = {
         problem: "Problem",
         solution: "Solution",
         impact: "Impact",
-        links: "Links",
+        links: "References & Coverage",
       },
     },
   },
@@ -100,6 +100,6 @@ export const copy = {
     copyright: "All rights reserved.",
     featuredProject: "Featured Project",
     readCaseStudy: "Read case study →",
-    architecture: "Architecture",
+    journey: "Journey",
   },
 };

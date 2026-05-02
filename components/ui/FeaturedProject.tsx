@@ -32,8 +32,14 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
           {project.description}
         </p>
 
+        {project.productionLine && (
+          <p className="mt-4 text-sm font-medium text-text-primary">
+            {project.productionLine}
+          </p>
+        )}
+
         {project.metrics && (
-          <div className="mt-6 grid grid-cols-3 gap-4 max-w-md">
+          <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-lg">
             {project.metrics.map((metric) => (
               <div key={metric.label}>
                 <div className="text-xl md:text-2xl font-bold text-text-primary">
@@ -50,7 +56,7 @@ export function FeaturedProject({ project }: FeaturedProjectProps) {
         {project.architecture && (
           <div className="mt-6">
             <div className="text-xs font-medium uppercase tracking-widest text-text-muted mb-3">
-              {copy.ui.architecture}
+              {copy.ui.journey}
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {project.architecture.map((step, i) => (

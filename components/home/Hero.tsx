@@ -9,10 +9,11 @@ import { copy } from "@/content/copy";
 import { fadeInUp, fadeIn, ease } from "@/lib/motion";
 
 const codeLines = [
-  { content: '<span class="text-accent">agent</span> = <span class="text-text-primary">train</span>(env, policy);', highlight: true },
-  { content: '<span class="text-accent">action</span> = agent.<span class="text-text-primary">decide</span>(state);', highlight: true },
-  { content: '<span class="text-accent">reward</span> = env.<span class="text-text-primary">step</span>(action);', highlight: true },
-  { content: '<span class="text-accent">deploy</span>(agent, <span class="text-text-primary">prod</span>);', highlight: true },
+  { content: '<span class="text-accent">intent</span> = <span class="text-text-primary">parse</span>(user_goal)', highlight: true },
+  { content: '<span class="text-accent">context</span> = <span class="text-text-primary">retrieve</span>(knowledge, intent)', highlight: true },
+  { content: '<span class="text-accent">plan</span> = agent.<span class="text-text-primary">reason</span>(intent, context)', highlight: true },
+  { content: '<span class="text-accent">action</span> = controller.<span class="text-text-primary">execute</span>(plan)', highlight: true },
+  { content: '<span class="text-accent">monitor</span>(action, latency_budget)', highlight: true },
 ];
 
 export function Hero() {
@@ -37,17 +38,34 @@ export function Hero() {
               <span className="bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">{profile.headlineAccent}</span>
             </motion.h1>
 
-            <motion.p
+            <motion.div
               {...fadeInUp}
               transition={{ duration: 0.4, delay: 0.2, ease }}
-              className="mt-6 text-base text-text-secondary leading-relaxed max-w-xl"
+              className="mt-6 max-w-xl"
             >
-              {profile.summary}
-            </motion.p>
+              <p className="text-base text-text-secondary leading-relaxed">
+                {profile.summary}
+              </p>
+              {profile.summarySecondary && (
+                <p className="mt-3 text-base text-text-secondary leading-relaxed">
+                  {profile.summarySecondary}
+                </p>
+              )}
+            </motion.div>
+
+            {profile.signalLine && (
+              <motion.p
+                {...fadeInUp}
+                transition={{ duration: 0.4, delay: 0.25, ease }}
+                className="mt-3 text-sm text-text-muted"
+              >
+                {profile.signalLine}
+              </motion.p>
+            )}
 
             <motion.div
               {...fadeInUp}
-              transition={{ duration: 0.4, delay: 0.3, ease }}
+              transition={{ duration: 0.4, delay: 0.35, ease }}
               className="mt-8 flex gap-4"
             >
               <Button href="/projects">
@@ -64,7 +82,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3, ease }}
             className="hidden md:block md:col-span-5 space-y-4"
           >
-            <CodeBlock filename="agent.py" lines={codeLines} />
+            <CodeBlock filename="pipeline.py" lines={codeLines} />
 
             <div className="rounded-[var(--radius-md)] border border-border bg-bg-secondary p-6 shadow-[var(--shadow-sm)]">
               <div className="grid grid-cols-3 gap-4 text-center">

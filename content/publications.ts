@@ -11,6 +11,17 @@ export interface Publication {
 export const publications: Publication[] = [
   // --- Journals ---
   {
+    title:
+      "Agentic AI in Intent Management for Differentiated Connectivity in Autonomous Networks",
+    authors: "P. Soldati, B. Demirel, Y. A. Wang and M. Sintorn",
+    venue: "IEEE Communications Magazine",
+    year: 2026,
+    link: "#",
+    summary:
+      "AI-driven intent management enabling differentiated connectivity in self-driving networks.",
+    type: "journal",
+  },
+  {
     title: "Generalization in Reinforcement Learning for Radio Access Networks",
     authors: "B. Demirel, Y. A. Wang, C. Tatino, and P. Soldati",
     venue: "IEEE Trans. ML in Comms & Networking",
@@ -123,22 +134,11 @@ export const publications: Publication[] = [
   // --- Preprints & Tech Reports ---
   {
     title:
-      "AI in Intent Management for Differentiated Connectivity in Autonomous Networks",
-    authors: "P. Soldati, B. Demirel, Y. A. Wang and M. Sintorn",
-    venue: "IEEE Communications Magazine",
-    year: 2026,
-    link: "#",
-    summary:
-      "AI-driven intent management enabling differentiated connectivity in self-driving networks.",
-    type: "preprint",
-  },
-  {
-    title:
       "When AI Has No Time to Think: Inference Under Extreme Latency and Compute Constraints in RANs",
     authors: "P. Soldati, C. Tatino, B. Demirel, and J. Wszolek",
     venue: "Ericsson Technology Review",
     year: 2026,
-    link: "#",
+    link: "https://www.ericsson.com/en/reports-and-papers/ericsson-technology-review/articles/when-ai-has-no-time-to-think",
     summary:
       "Techniques for deploying AI models on baseband hardware under sub-millisecond latency budgets.",
     type: "techreport",

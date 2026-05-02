@@ -31,7 +31,7 @@ export default function ResearchPage() {
           <h3 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
             {categories.book}
           </h3>
-          <div className="flex items-center justify-between gap-4 p-6 rounded-[var(--radius-md)] border border-border bg-bg-primary">
+          <div className="flex items-center justify-between gap-4 p-6 rounded-[var(--radius-md)] border border-border bg-bg-primary hover:bg-bg-elevated transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5 cursor-default">
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-medium text-text-primary">
                 {book.title}

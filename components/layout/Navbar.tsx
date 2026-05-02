@@ -29,9 +29,13 @@ export function Navbar() {
       <Container className="flex items-center justify-between">
         <Link
           href="/"
-          className="text-text-primary font-bold text-xl tracking-tight font-[family-name:var(--font-display)]"
+          className="flex items-center"
         >
-          {profile.initials}<span className="text-accent">.</span>
+          <img
+            src={theme === "dark" ? "/logo-dark.png" : "/logo-light.png"}
+            alt={profile.name}
+            className="h-7 w-auto"
+          />
         </Link>
 
         <ul className="hidden md:flex items-center gap-6">

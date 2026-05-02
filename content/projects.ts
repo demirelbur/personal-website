@@ -19,9 +19,11 @@ export interface Project {
   year: number;
   featured: boolean;
   flagship?: boolean;
+  productionLine?: string;
   metrics?: ProjectMetric[];
   architecture?: string[];
   links?: ProjectLink[];
+  body?: string;
 }
 
 export const projects: Project[] = [
@@ -40,39 +42,157 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Distributed RL Training System",
+    title: "High-Throughput Distributed RL Training System",
     slug: "distributed-rl-training",
     description:
-      "High-throughput distributed reinforcement learning system spanning GPU learners, 100+ CPU actors, and multi-node coordination.",
+      "High-throughput distributed reinforcement learning system designed to scale experience generation and policy optimization across multi-node CPU/GPU infrastructure.",
     problem:
-      "Training RL agents on radio network simulators was bottlenecked by serial execution, taking weeks for a single experiment cycle.",
+      "Single-node RL training collapses under production workloads. Environment interaction is CPU-bound, policy optimization is GPU-bound, and experience throughput must sustain both without bottlenecking either.",
     solution:
-      "Designed scalable HPC architectures with optimized scheduling, high-throughput data pipelines, and multi-node coordination using Redis, ZeroMQ, and PyTorch RPC.",
-    outcome: "Reduced distributed RL training time by 20x",
-    tech: ["PyTorch", "Redis", "ZeroMQ", "LSF", "Docker"],
+      "Designed and implemented a distributed RL system that fully decouples actors, replay memory, and learning into independently scalable components operating across multi-node HPC infrastructure.",
+    outcome: "20× faster training across 100+ distributed actors.",
+    tech: ["PyTorch", "PyTorch RPC", "ZeroMQ", "Redis", "LSF", "Slurm", "HPC"],
     year: 2023,
     featured: true,
+    links: [
+      {
+        label: "Generalization in RL for Radio Access Networks (IEEE Trans. ML in Comms & Networking, 2026)",
+        url: "https://ieeexplore.ieee.org/document/11358408",
+      },
+      {
+        label: "Generalization in RL for Radio Access Networks (arXiv preprint)",
+        url: "https://arxiv.org/abs/2507.06602",
+      },
+    ],
+    body: `## Problem
+
+Single-node RL training collapses under production workloads. Environment interaction is CPU-bound, policy optimization is GPU-bound, and experience throughput must sustain both without bottlenecking either. Naïve parallelization introduces synchronization overhead that negates the compute gains — actors stall waiting for weight updates, learners idle waiting for data, and replay buffers become contention points.
+
+The core challenge: decouple experience generation from policy optimization while preserving training stability at scale.
+
+## Contribution
+
+Designed and implemented a distributed RL system that fully decouples actors, replay memory, and learning into independently scalable components operating across multi-node HPC infrastructure.
+
+The system sustains continuous high-throughput training by combining asynchronous execution, sharded prioritized replay, and centralized GPU-based optimization — eliminating the synchronization barriers that limit conventional distributed RL implementations.
+
+## System Architecture
+
+Distributed actors interact with parallel simulation environments and stream transitions into sharded replay memory. The replay system partitions storage across shards, aggregates experience, and serves prioritized minibatches to the learner.
+
+A centralized GPU learner performs gradient updates on sampled batches and asynchronously broadcasts updated policy weights to all actors. Actors never block on learner updates; the learner never blocks on actor throughput. This decoupling allows both pipelines to saturate their respective compute independently.
+
+## Design Decisions
+
+- **Fully Decoupled Components** — Actors, replay, and learner operate as independent processes with no shared state — eliminating synchronization bottlenecks and enabling per-component scaling.
+
+- **Sharded Replay Memory** — Experience is partitioned across multiple shards with per-shard priority queues, sustaining high write throughput from actors and concurrent read access for minibatch sampling.
+
+- **Asynchronous Weight Broadcast** — Policy weights are pushed to actors without blocking the training loop. Actors tolerate slightly stale policies — a well-understood trade-off in off-policy methods.
+
+- **Centralized GPU Learner** — Single learner processes large minibatches on GPU, amortizing gradient computation and maintaining stable optimization dynamics across the full experience distribution.
+
+- **Horizontally Scaled Actors** — 100+ CPU workers generate experience in parallel, each running independent simulation instances. Actor count scales linearly with available compute.
+
+## Results
+
+- **20× training speedup** over single-node baseline
+- **100+ concurrent actors** sustaining continuous experience generation
+- **Linear scaling** across multi-node CPU/GPU infrastructure
+- **Stable convergence** under fully asynchronous operation
+
+## Impact
+
+This system reduced experiment cycle time from weeks to hours, making large-scale RL experimentation operationally feasible. By removing infrastructure as the bottleneck, it enabled rapid iteration on policy architectures and training configurations that were previously impractical to evaluate at scale.`,
   },
   {
     title: "AI-Native Link Adaptation",
     slug: "ai-native-link-adaptation",
     description:
-      "Production-grade AI system for link adaptation in 5G RAN — a 6-year journey from early research to commercial product deployed with global Tier-1 operators.",
+      "Production AI system for real-time 5G link adaptation under sub-100μs latency constraints.",
     problem:
-      "Rule-based link adaptation in 5G RAN relies on hand-tuned heuristics (e.g., OLLA) that cannot exploit correlated fading in massive MIMO, generalize across heterogeneous deployments, or adapt to rapid channel state changes. Policies trained with RL overfit to narrow training conditions and degrade in unseen scenarios. Meanwhile, baseband hardware imposes sub-100μs inference and <1 MB model size constraints — making large generalizable models impractical to deploy directly.",
+      "Real-time link adaptation under strict latency and hardware constraints.",
     solution:
-      "Led early research starting in 2021 and drove the transition from prototype to product alongside interdisciplinary colleagues across radio, systems, and silicon teams. Developed a generalization-centered RL framework using graph attention networks for robust state encoding, domain randomization for training breadth, and distributed actor architectures aligned with O-RAN principles. Applied policy distillation to compress large teacher models into compact students that fit within baseband hardware constraints while preserving generalization across diverse radio conditions.",
-    outcome: "Up to 20% throughput increase and 10% spectral efficiency gain in production 5G RAN. Bell Canada became the first operator globally to field-test the technology (2025). AT&T demonstrated portability on Cloud RAN with Intel Xeon 6 SoC at MWC 2026. The product is now part of Ericsson's commercial 5G Advanced portfolio.",
-    tech: ["PyTorch", "Graph Neural Networks", "Policy Distillation", "Domain Randomization", "Distributed RL", "HPC"],
+      "Designed and deployed an AI-native link adaptation system that replaces heuristic-based control with learned policies operating under real-time baseband constraints.",
+    outcome: "Production deployment with measurable throughput gains in live networks.",
+    body: `## Problem
+
+Traditional link adaptation in radio access networks relies on heuristic control loops (e.g., OLLA) and coarse feedback signals, which struggle under rapidly changing channel conditions and heterogeneous traffic patterns.
+
+While reinforcement learning methods demonstrate strong performance in simulation, they rarely transfer to production due to stringent system constraints:
+- Sub-100μs inference latency requirements
+- Non-stationary and partially observable environments
+- Tight integration with baseband hardware and protocol stacks
+- Strict reliability and stability guarantees in live networks
+
+The core challenge is not learning a better policy, but **deploying it reliably in real-time network infrastructure**.
+
+## Contribution
+
+Designed and deployed an AI-native link adaptation system replacing heuristic control with learned policies under real-time baseband constraints.
+
+The system bridges RL research and production through a unified pipeline for training, compression, and deployment — enabling continuous adaptation in live 5G networks.
+
+## System Architecture
+
+RL policies are trained in high-fidelity simulation environments capturing radio dynamics.
+
+Policies are then distilled into compact models optimized for deterministic, low-latency inference.
+
+The distilled model is deployed directly in the baseband pipeline, enabling real-time decisions under sub-100μs constraints.
+
+Continuous validation in live networks ensures robustness under non-stationary conditions.
+
+## Design Decisions
+
+- **Policy Distillation** — Compress high-capacity RL policies into models meeting strict latency budgets.
+
+- **Simulation-Driven Training** — Train in system-level simulators approximating real-world radio conditions.
+
+- **Latency-Constrained Design** — Prioritize deterministic execution and predictable runtime over model complexity.
+
+- **Closed-Loop Integration** — Embed inference directly into the link adaptation control loop.
+
+- **Robustness to Non-Stationarity** — Handle distribution shifts in dynamic network environments.
+
+- **Stability-Aware Optimization** — Use conservative updates to ensure reliable production behavior.
+
+## Results
+
+- **+20% throughput** in live 5G networks
+- **+10% spectral efficiency**
+- **<100μs latency** on baseband hardware
+- **Deployed with Tier-1 operators**
+
+## Impact
+
+This system demonstrates that reinforcement learning can operate reliably in real-world communication infrastructure.
+
+By replacing static heuristics with adaptive policies, it improves efficiency, responsiveness, and robustness in live networks — enabling AI-native radio systems.
+
+## Lessons Learned
+
+- **Deployment is the bottleneck** — Reliability under real-world constraints dominates performance.
+
+- **Simulation–reality gap dominates** — Strong simulation results do not guarantee production success.
+
+- **Latency reshapes model design** — Sub-100μs constraints require aggressive compression and simplification.
+
+- **Stability > peak performance** — Production favors predictable behavior over aggressive optimization.
+
+- **System integration defines success** — ML performance depends as much on infrastructure as on algorithms.`,
+    tech: ["PyTorch", "Graph Neural Networks", "Policy Distillation", "Domain Randomization", "Distributed RL"],
     year: 2023,
     featured: true,
     flagship: true,
+    productionLine: "From research to production: deployed in live 5G networks with Tier-1 operators.",
     metrics: [
-      { value: "20%", label: "Throughput Gain" },
+      { value: "+20%", label: "Throughput Gain" },
+      { value: "+10%", label: "Spectral Efficiency" },
       { value: "<100μs", label: "Inference Latency" },
-      { value: "2", label: "Tier-1 Operators" },
+      { value: "Tier-1", label: "Operators Deployed" },
     ],
-    architecture: ["Domain Randomization", "Graph Attention Networks", "Policy Distillation", "Baseband Deployment"],
+    architecture: ["Research", "Prototype", "Scalable Real-Time System", "Production Deployment"],
     links: [
       {
         label: "Ericsson & Bell Canada AI-Native Link Adaptation Press Release",
@@ -107,20 +227,6 @@ export const projects: Project[] = [
         url: "https://ieeexplore.ieee.org/document/10068317",
       },
     ],
-  },
-  {
-    title: "PyTorch RL Library",
-    slug: "pytorch-rl-library",
-    description:
-      "Internal PyTorch-native reinforcement learning library integrating multiple simulators and standardizing training workflows.",
-    problem:
-      "Teams used fragmented RL implementations with inconsistent interfaces, making reproducibility and collaboration difficult.",
-    solution:
-      "Built a unified PyTorch-native library with standardized APIs, multiple simulator integrations, and streamlined training workflows.",
-    outcome: "Adopted by ~100 engineers and researchers across teams",
-    tech: ["Python", "PyTorch", "NumPy", "GitLab CI/CD"],
-    year: 2023,
-    featured: false,
   },
   {
     title: "Agentic Product Recommendation System",

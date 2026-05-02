@@ -2,6 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
+import { PostBody } from "@/components/ui/PostBody";
+import { ArchitectureDiagram } from "@/components/ui/ArchitectureDiagram";
+import { LinkAdaptationDiagram } from "@/components/ui/LinkAdaptationDiagram";
 import { projects } from "@/content/projects";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
@@ -52,56 +55,100 @@ export default async function ProjectPage({ params }: Props) {
             ))}
           </div>
 
-          <div className="mt-12 space-y-8">
-            <div>
-              <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
-                {labels.problem}
-              </h2>
-              <p className="text-text-secondary leading-relaxed">
-                {project.problem}
-              </p>
+          {project.body ? (
+            <div className="mt-12">
+              {project.slug === "distributed-rl-training" ? (
+                <>
+                  <PostBody content={project.body.split("## System Architecture")[0]} />
+                  <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">System Architecture</h2>
+                  <ArchitectureDiagram />
+                  <PostBody content={project.body.split("## System Architecture")[1]} />
+                </>
+              ) : project.slug === "ai-native-link-adaptation" ? (
+                <>
+                  <PostBody content={project.body.split("## System Architecture")[0]} />
+                  <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">System Architecture</h2>
+                  <LinkAdaptationDiagram />
+                  <PostBody content={project.body.split("## System Architecture")[1]} />
+                </>
+              ) : (
+                <PostBody content={project.body} />
+              )}
+              {project.links && project.links.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
+                    {copy.pages.projectDetail.labels.links}
+                  </h2>
+                  <ul className="space-y-2">
+                    {project.links.map((link) => (
+                      <li key={link.url}>
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-text-secondary hover:text-accent transition-colors duration-[var(--duration-fast)]"
+                        >
+                          {link.label} <span className="text-accent">→</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-
-            <div>
-              <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
-                {labels.solution}
-              </h2>
-              <p className="text-text-secondary leading-relaxed">
-                {project.solution}
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
-                {labels.impact}
-              </h2>
-              <p className="text-accent font-medium text-lg">
-                {project.outcome}
-              </p>
-            </div>
-
-            {project.links && project.links.length > 0 && (
+          ) : (
+            <div className="mt-12 space-y-8">
               <div>
-                <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
-                  {copy.pages.projectDetail.labels.links}
+                <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
+                  {labels.problem}
                 </h2>
-                <ul className="space-y-2">
-                  {project.links.map((link) => (
-                    <li key={link.url}>
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-text-secondary hover:text-accent transition-colors duration-[var(--duration-fast)]"
-                      >
-                        {link.label} <span className="text-accent">→</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-text-secondary leading-relaxed">
+                  {project.problem}
+                </p>
               </div>
-            )}
-          </div>
+
+              <div>
+                <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
+                  {labels.solution}
+                </h2>
+                <p className="text-text-secondary leading-relaxed">
+                  {project.solution}
+                </p>
+              </div>
+
+
+              <div>
+                <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
+                  {labels.impact}
+                </h2>
+                <p className="text-accent font-medium text-lg">
+                  {project.outcome}
+                </p>
+              </div>
+
+              {project.links && project.links.length > 0 && (
+                <div>
+                  <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
+                    {copy.pages.projectDetail.labels.links}
+                  </h2>
+                  <ul className="space-y-2">
+                    {project.links.map((link) => (
+                      <li key={link.url}>
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-text-secondary hover:text-accent transition-colors duration-[var(--duration-fast)]"
+                        >
+                          {link.label} <span className="text-accent">→</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </article>
       </Section>
     </div>
