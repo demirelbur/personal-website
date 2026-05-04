@@ -56,7 +56,8 @@ export const copy = {
         "25+ peer-reviewed papers in machine learning, control, and optimization. 500+ citations.",
       categories: {
         book: "Book",
-        recent: "Preprints",
+        preprints: "Preprints",
+        techreports: "Technical Reports",
         journal: "Journal Publications",
         conference: "Conference Publications",
         patents: "Patents",

@@ -7,8 +7,17 @@ import { Button } from "@/components/ui/Button";
 import { publications } from "@/content/publications";
 import { copy } from "@/content/copy";
 
+const featuredTitles = [
+  "When AI Has No Time to Think: Inference Under Extreme Latency and Compute Constraints in RANs",
+  "From Intents to Actions: Agentic AI in Autonomous Networks",
+  "Generalization in Reinforcement Learning for Radio Access Networks",
+  "Design Principles for Model Generalization and Scalable AI in Radio Access Networks",
+];
+
 export function ResearchPreview() {
-  const selected = publications.slice(0, 4);
+  const selected = featuredTitles
+    .map((title) => publications.find((p) => p.title === title))
+    .filter(Boolean) as typeof publications;
 
   return (
     <Section id="research" className="bg-bg-secondary">
