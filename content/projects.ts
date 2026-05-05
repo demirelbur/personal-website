@@ -8,6 +8,11 @@ export interface ProjectMetric {
   label: string;
 }
 
+export interface ProjectSummaryMetric {
+  label: string;
+  value: string;
+}
+
 export interface Project {
   title: string;
   slug: string;
@@ -24,12 +29,16 @@ export interface Project {
   architecture?: string[];
   links?: ProjectLink[];
   body?: string;
+  category?: string;
+  summaryMetrics?: ProjectSummaryMetric[];
+  takeaway?: string;
 }
 
 export const projects: Project[] = [
   {
     title: "Agentic AI for Autonomous Networks",
     slug: "agentic-ai-networks",
+    category: "PROJECT / AGENTIC AI",
     description:
       "Agentic AI system for autonomous 5G network operations enabling real-time closed-loop decision-making.",
     problem:
@@ -37,6 +46,12 @@ export const projects: Project[] = [
     solution:
       "Designed and industrialized an agentic system integrating reinforcement learning, Bayesian optimization, and LLM-based reasoning for autonomous closed-loop control.",
     outcome: "Enabled real-time autonomous decision-making in production 5G networks",
+    takeaway: "Closed-loop autonomous decision-making in production 5G networks",
+    summaryMetrics: [
+      { label: "IMPACT", value: "real-time closed-loop" },
+      { label: "STACK", value: "LLMs + RL" },
+      { label: "OUTCOME", value: "production 5G ops" },
+    ],
     tech: ["Python", "LLMs", "Bayesian Optimization", "RL", "FastAPI"],
     year: 2024,
     featured: true,
@@ -44,6 +59,7 @@ export const projects: Project[] = [
   {
     title: "High-Throughput Distributed RL Training System",
     slug: "distributed-rl-training",
+    category: "PROJECT / RL SYSTEMS",
     description:
       "High-throughput distributed reinforcement learning system designed to scale experience generation and policy optimization across multi-node CPU/GPU infrastructure.",
     problem:
@@ -51,6 +67,12 @@ export const projects: Project[] = [
     solution:
       "Designed and implemented a distributed RL system that fully decouples actors, replay memory, and learning into independently scalable components operating across multi-node HPC infrastructure.",
     outcome: "20× faster training across 100+ distributed actors.",
+    takeaway: "20× faster training across 100+ distributed actors",
+    summaryMetrics: [
+      { label: "IMPACT", value: "20× faster" },
+      { label: "STACK", value: "PyTorch RPC + Redis" },
+      { label: "OUTCOME", value: "100+ actors" },
+    ],
     tech: ["PyTorch", "PyTorch RPC", "ZeroMQ", "Redis", "LSF", "Slurm", "HPC"],
     year: 2023,
     featured: true,
@@ -109,7 +131,7 @@ This system reduced experiment cycle time from weeks to hours, making large-scal
     title: "AI-Native Link Adaptation",
     slug: "ai-native-link-adaptation",
     description:
-      "Production AI system for real-time 5G link adaptation under sub-100μs latency constraints.",
+      "Production AI system for real-time 5G link adaptation under sub-30μs latency constraints.",
     problem:
       "Real-time link adaptation under strict latency and hardware constraints.",
     solution:
@@ -120,7 +142,7 @@ This system reduced experiment cycle time from weeks to hours, making large-scal
 Traditional link adaptation in radio access networks relies on heuristic control loops (e.g., OLLA) and coarse feedback signals, which struggle under rapidly changing channel conditions and heterogeneous traffic patterns.
 
 While reinforcement learning methods demonstrate strong performance in simulation, they rarely transfer to production due to stringent system constraints:
-- Sub-100μs inference latency requirements
+- Sub-30μs inference latency requirements
 - Non-stationary and partially observable environments
 - Tight integration with baseband hardware and protocol stacks
 - Strict reliability and stability guarantees in live networks
@@ -135,13 +157,7 @@ The system bridges RL research and production through a unified pipeline for tra
 
 ## System Architecture
 
-RL policies are trained in high-fidelity simulation environments capturing radio dynamics.
-
-Policies are then distilled into compact models optimized for deterministic, low-latency inference.
-
-The distilled model is deployed directly in the baseband pipeline, enabling real-time decisions under sub-100μs constraints.
-
-Continuous validation in live networks ensures robustness under non-stationary conditions.
+RL policies are trained in high-fidelity simulation environments capturing radio dynamics. Policies are then distilled into compact models optimized for deterministic, low-latency inference. The distilled model is deployed directly in the baseband pipeline, enabling real-time decisions under sub-30μs constraints. Continuous validation in live networks ensures robustness under non-stationary conditions.
 
 ## Design Decisions
 
@@ -160,8 +176,8 @@ Continuous validation in live networks ensures robustness under non-stationary c
 ## Results
 
 - **+20% throughput** in live 5G networks
-- **+10% spectral efficiency**
-- **<100μs latency** on baseband hardware
+- **+10% spectral efficiency** in live 5G networks
+- **<30μs latency** on baseband hardware
 - **Deployed with Tier-1 operators**
 
 ## Impact
@@ -176,11 +192,18 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
 
 - **Simulation–reality gap dominates** — Strong simulation results do not guarantee production success.
 
-- **Latency reshapes model design** — Sub-100μs constraints require aggressive compression and simplification.
+- **Latency reshapes model design** — Sub-30μs constraints require aggressive compression and simplification.
 
 - **Stability > peak performance** — Production favors predictable behavior over aggressive optimization.
 
 - **System integration defines success** — ML performance depends as much on infrastructure as on algorithms.`,
+    category: "PROJECT / TELECOM AI",
+    takeaway: "Production deployment with measurable throughput gains in live networks",
+    summaryMetrics: [
+      { label: "IMPACT", value: "sub-30μs" },
+      { label: "STACK", value: "PyTorch + GNNs" },
+      { label: "OUTCOME", value: "live network gains" },
+    ],
     tech: ["PyTorch", "Graph Neural Networks", "Policy Distillation", "Domain Randomization", "Distributed RL"],
     year: 2023,
     featured: true,
@@ -189,7 +212,7 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
     metrics: [
       { value: "+20%", label: "Throughput Gain" },
       { value: "+10%", label: "Spectral Efficiency" },
-      { value: "<100μs", label: "Inference Latency" },
+      { value: "<30μs", label: "Inference Latency" },
       { value: "Tier-1", label: "Operators Deployed" },
     ],
     architecture: ["Research", "Prototype", "Scalable Real-Time System", "Production Deployment"],
@@ -231,6 +254,7 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
   {
     title: "Agentic Product Recommendation System",
     slug: "agentic-recommendation",
+    category: "PROJECT / AGENTIC COMMERCE",
     description:
       "Conversational recommendation system combining multi-agent LLM pipelines with hybrid retrieval for e-commerce product discovery.",
     problem:
@@ -238,8 +262,14 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
     solution:
       "Combined structured SQL filtering with semantic vector search (ChromaDB + sentence-transformers), with schema-validated outputs and contradiction detection to prevent hallucination.",
     outcome: "Reliable conversational product discovery with zero hallucinated attributes",
+    takeaway: "Reliable conversational product discovery with zero hallucinated attributes",
+    summaryMetrics: [
+      { label: "IMPACT", value: "reliable discovery" },
+      { label: "STACK", value: "FastAPI + RAG" },
+      { label: "OUTCOME", value: "zero hallucinations" },
+    ],
     tech: ["Python", "FastAPI", "ChromaDB", "Pydantic", "RAG"],
     year: 2024,
-    featured: false,
+    featured: true,
   },
 ];

@@ -1,0 +1,18 @@
+[project]
+name = "personal-website"
+version = "0.1.0"
+description = "Python backend for Ask AI feature"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.136.1",
+    "httpx>=0.28.1",
+    "numpy>=2.4.4",
+    "pydantic>=2.13.3",
+    "pydantic-ai>=1.90.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.2",
+    "ruff>=0.15.12",
+]

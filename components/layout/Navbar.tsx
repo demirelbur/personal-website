@@ -6,11 +6,13 @@ import { navItems } from "@/content/navigation";
 import { profile } from "@/content/profile";
 import { useTheme } from "@/lib/theme";
 import { Container } from "./Container";
+import { AskAIButton, AskAIPanel, useAskAI } from "@/components/AskAI";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggle } = useTheme();
+  const askAI = useAskAI();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -19,6 +21,7 @@ export function Navbar() {
   }, []);
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 h-[72px] flex items-center transition-all duration-[var(--duration-base)] ${
         scrolled
@@ -51,7 +54,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center gap-2">
+          <AskAIButton onClick={askAI.open} />
           <button
             onClick={toggle}
             className="p-2 rounded-[var(--radius-sm)] text-text-muted hover:text-text-primary hover:bg-bg-elevated transition-colors duration-[var(--duration-fast)]"
@@ -120,9 +124,23 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileOpen(false);
+                  askAI.open();
+                }}
+                className="text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                Ask AI
+              </button>
+            </li>
           </ul>
         </div>
       )}
     </header>
+    <AskAIPanel isOpen={askAI.isOpen} onClose={askAI.close} />
+    </>
   );
 }

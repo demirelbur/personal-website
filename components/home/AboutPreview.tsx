@@ -9,6 +9,7 @@ import { copy } from "@/content/copy";
 
 export function AboutPreview() {
   const latestRole = experience[0];
+  const bioParas = profile.bio.split("\n\n").filter((p) => !p.startsWith("#"));
 
   return (
     <Section id="about" className="bg-bg-secondary">
@@ -18,10 +19,10 @@ export function AboutPreview() {
             {copy.sections.about.title}
           </h2>
           <p className="mt-6 text-text-secondary leading-relaxed">
-            {profile.bio[0]}
+            {bioParas[0]}
           </p>
           <p className="mt-4 text-text-secondary leading-relaxed">
-            {profile.bio[1]}
+            {bioParas[1]}
           </p>
 
           <div className="mt-8 p-4 rounded-[var(--radius-md)] border border-border bg-bg-primary">

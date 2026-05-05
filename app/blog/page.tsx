@@ -21,7 +21,7 @@ export default function WritingPage() {
           {posts.map((post) => (
             <Link
               key={post.slug}
-              href={`/writing/${post.slug}`}
+              href={`/blog/${post.slug}`}
               className="block group p-5 rounded-[var(--radius-md)] border border-border hover:bg-bg-secondary transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5"
             >
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">

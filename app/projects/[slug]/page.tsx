@@ -4,7 +4,6 @@ import { Section } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
 import { PostBody } from "@/components/ui/PostBody";
 import { ArchitectureDiagram } from "@/components/ui/ArchitectureDiagram";
-import { LinkAdaptationDiagram } from "@/components/ui/LinkAdaptationDiagram";
 import { projects } from "@/content/projects";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
@@ -62,13 +61,6 @@ export default async function ProjectPage({ params }: Props) {
                   <PostBody content={project.body.split("## System Architecture")[0]} />
                   <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">System Architecture</h2>
                   <ArchitectureDiagram />
-                  <PostBody content={project.body.split("## System Architecture")[1]} />
-                </>
-              ) : project.slug === "ai-native-link-adaptation" ? (
-                <>
-                  <PostBody content={project.body.split("## System Architecture")[0]} />
-                  <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">System Architecture</h2>
-                  <LinkAdaptationDiagram />
                   <PostBody content={project.body.split("## System Architecture")[1]} />
                 </>
               ) : (

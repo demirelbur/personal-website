@@ -31,7 +31,7 @@ export default async function PostPage({ params }: Props) {
       <Section>
         <article className="max-w-2xl">
           <Link
-            href="/writing"
+            href="/blog"
             className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors duration-[var(--duration-fast)] mb-8"
           >
             {copy.nav.backToWriting}

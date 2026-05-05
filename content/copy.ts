@@ -1,7 +1,7 @@
 export const copy = {
   nav: {
     backToProjects: "← Back to Projects",
-    backToWriting: "← Back to Writing",
+    backToWriting: "← Back to Blog",
   },
   hero: {
     cta: {
@@ -28,7 +28,7 @@ export const copy = {
       viewAll: "All publications",
     },
     writing: {
-      title: "Writing",
+      title: "Blog",
       subtitle:
         "Technical deep-dives on distributed RL, agentic AI, and systems engineering.",
       viewAll: "All posts",
@@ -64,7 +64,7 @@ export const copy = {
       },
     },
     writing: {
-      title: "Writing",
+      title: "Blog",
       subtitle:
         "Technical deep-dives on distributed RL, agentic AI, and systems engineering.",
     },

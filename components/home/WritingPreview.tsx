@@ -20,7 +20,7 @@ export function WritingPreview() {
         {posts.map((post, i) => (
           <motion.div key={post.slug} {...staggeredFadeInUp(i * 0.06)}>
             <Link
-              href={`/writing/${post.slug}`}
+              href={`/blog/${post.slug}`}
               className="block group p-5 rounded-[var(--radius-md)] border border-border hover:bg-bg-secondary transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5"
             >
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
@@ -41,7 +41,7 @@ export function WritingPreview() {
         ))}
       </div>
       <div className="mt-8">
-        <Button href="/writing" variant="text">
+        <Button href="/blog" variant="text">
           {copy.sections.writing.viewAll}
         </Button>
       </div>

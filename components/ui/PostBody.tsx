@@ -14,17 +14,17 @@ export function PostBody({ content }: PostBodyProps) {
         remarkPlugins={[remarkGfm]}
         components={{
           h2: ({ children }) => (
-            <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">
+            <h2 className="text-xl font-semibold text-text-primary mt-6 mb-2">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-lg font-medium text-text-primary mt-8 mb-3">
+            <h3 className="text-lg font-medium text-text-primary mt-4 mb-1.5">
               {children}
             </h3>
           ),
           p: ({ children }) => (
-            <p className="text-text-secondary leading-relaxed mb-4">
+            <p className="text-text-secondary leading-relaxed mb-3">
               {children}
             </p>
           ),
@@ -52,7 +52,7 @@ export function PostBody({ content }: PostBodyProps) {
             </pre>
           ),
           ul: ({ children }) => (
-            <ul className="my-4 space-y-2 list-disc pl-6 text-text-secondary">
+            <ul className="my-3 space-y-1.5 list-disc pl-6 text-text-secondary">
               {children}
             </ul>
           ),
