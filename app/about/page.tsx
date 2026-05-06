@@ -433,11 +433,20 @@ export default function AboutPage() {
           </div>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <Button href={`mailto:${profile.email}`}>Get in Touch</Button>
-            <Button href="/projects" variant="secondary">
-              View Projects
-            </Button>
+          <div className="text-center">
+            <h2 className="text-lg font-semibold text-text-primary">
+              See the systems behind the story
+            </h2>
+            <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
+              Explore selected projects that connect reinforcement learning,
+              agentic AI, distributed systems, and production deployment.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center">
+              <Button href="/projects">View Projects</Button>
+              <Button href={`mailto:${profile.email}`} variant="secondary">
+                Get in Touch
+              </Button>
+            </div>
           </div>
         </div>
       </Section>

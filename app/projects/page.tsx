@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
 import { projects } from "@/content/projects";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
@@ -88,6 +89,23 @@ export default function ProjectsPage() {
               </Link>
             );
           })}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 text-center">
+          <h2 className="text-lg font-semibold text-text-primary">
+            Want the research behind these systems?
+          </h2>
+          <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
+            Many of these projects are connected to research in reinforcement
+            learning, RAN optimization, agentic AI, and production ML systems.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <Button href="/research">Read Research</Button>
+            <Button href={`mailto:${profile.email}`} variant="secondary">
+              Get in Touch
+            </Button>
+          </div>
         </div>
       </Section>
     </div>

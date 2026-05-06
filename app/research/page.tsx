@@ -1,5 +1,6 @@
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
 import { PublicationItem, BookItem } from "@/components/ui/PublicationItem";
 import { publications, book } from "@/content/publications";
 import { profile } from "@/content/profile";
@@ -122,6 +123,23 @@ export default function ResearchPage() {
             </div>
           </div>
         )}
+
+        {/* CTA */}
+        <div className="mt-16 text-center">
+          <h2 className="text-lg font-semibold text-text-primary">
+            From papers to production systems
+          </h2>
+          <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
+            Explore how my research connects to deployed ML systems, distributed
+            RL platforms, and autonomous network intelligence.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <Button href="/projects">View Projects</Button>
+            <Button href="/blog" variant="secondary">
+              Read Blog
+            </Button>
+          </div>
+        </div>
       </Section>
     </div>
   );

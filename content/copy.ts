@@ -38,9 +38,9 @@ export const copy = {
       cta: "More about me",
     },
     contact: {
-      title: "Let’s work together",
+      title: "Let’s build AI systems that survive production constraints",
       subtitle:
-        "Open to research collaborations, consulting, and engineering challenges where ML meets production constraints.",
+        "If you are working on production RL, agentic AI systems, autonomous networks, or ML infrastructure under real-world constraints, I’d be happy to connect.",
       cta: "Get in Touch",
       ctaSecondary: "View Projects",
     },

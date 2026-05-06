@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
 import { posts } from "@/content/writing";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 
 export const metadata = {
-  title: `Writing — ${profile.name}`,
+  title: `Blog — ${profile.name}`,
 };
 
 export default function WritingPage() {
@@ -40,6 +41,23 @@ export default function WritingPage() {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 text-center">
+          <h2 className="text-lg font-semibold text-text-primary">
+            Interested in the systems behind the ideas?
+          </h2>
+          <p className="mt-2 text-sm text-text-secondary max-w-lg mx-auto">
+            These posts connect research concepts to production AI systems,
+            reinforcement learning infrastructure, and autonomous network design.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <Button href="/projects">View Projects</Button>
+            <Button href={`mailto:${profile.email}`} variant="secondary">
+              Get in Touch
+            </Button>
+          </div>
         </div>
       </Section>
     </div>

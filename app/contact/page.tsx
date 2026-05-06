@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { SocialIcons } from "@/components/ui/SocialIcons";
@@ -47,6 +48,26 @@ export default function ContactPage() {
               <Button href={`mailto:${profile.email}`}>
                 {copy.pages.contact.cta}
               </Button>
+            </div>
+
+            <div className="pt-8 border-t border-border">
+              <p className="text-xs text-text-muted mb-3">
+                Not ready to reach out yet? Explore my work first.
+              </p>
+              <div className="flex gap-4">
+                <Link
+                  href="/projects"
+                  className="text-sm text-accent hover:text-accent-hover transition-colors duration-[var(--duration-fast)]"
+                >
+                  View Projects →
+                </Link>
+                <Link
+                  href="/research"
+                  className="text-sm text-accent hover:text-accent-hover transition-colors duration-[var(--duration-fast)]"
+                >
+                  Read Research →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
