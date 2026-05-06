@@ -18,7 +18,7 @@ const codeLines = [
 
 export function Hero() {
   return (
-    <section className="pt-[128px] pb-12 md:pt-[128px] md:pb-16 lg:pb-24">
+    <section className="pt-[96px] pb-8 md:pt-[128px] md:pb-16 lg:pb-24">
       <Container>
         <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
           <div className="md:col-span-7">

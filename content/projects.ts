@@ -32,6 +32,7 @@ export interface Project {
   category?: string;
   summaryMetrics?: ProjectSummaryMetric[];
   takeaway?: string;
+  mobileHighlight?: string;
 }
 
 export const projects: Project[] = [
@@ -55,6 +56,7 @@ export const projects: Project[] = [
     tech: ["Python", "LLMs", "Bayesian Optimization", "RL", "FastAPI"],
     year: 2024,
     featured: true,
+    mobileHighlight: "real-time closed-loop · production 5G ops",
   },
   {
     title: "High-Throughput Distributed RL Training System",
@@ -76,6 +78,7 @@ export const projects: Project[] = [
     tech: ["PyTorch", "PyTorch RPC", "ZeroMQ", "Redis", "LSF", "Slurm", "HPC"],
     year: 2023,
     featured: true,
+    mobileHighlight: "20× faster · 100+ actors",
     links: [
       {
         label: "Generalization in RL for Radio Access Networks (IEEE Trans. ML in Comms & Networking, 2026)",
@@ -208,6 +211,7 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
     year: 2023,
     featured: true,
     flagship: true,
+    mobileHighlight: "sub-30μs · live network gains",
     productionLine: "From research to production: deployed in live 5G networks with Tier-1 operators.",
     metrics: [
       { value: "+20%", label: "Throughput Gain" },
@@ -271,5 +275,6 @@ By replacing static heuristics with adaptive policies, it improves efficiency, r
     tech: ["Python", "FastAPI", "ChromaDB", "Pydantic", "RAG"],
     year: 2024,
     featured: true,
+    mobileHighlight: "zero hallucinations · reliable discovery",
   },
 ];

@@ -16,7 +16,29 @@ export function WritingPreview() {
         title={copy.sections.writing.title}
         subtitle={copy.sections.writing.subtitle}
       />
-      <div className="space-y-4">
+      {/* Mobile: show 2 posts */}
+      <div className="space-y-3 md:hidden">
+        {posts.slice(0, 2).map((post, i) => (
+          <motion.div key={post.slug} {...staggeredFadeInUp(i * 0.06)}>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="block group p-4 rounded-[var(--radius-md)] border border-border hover:bg-bg-secondary transition-all duration-[var(--duration-base)] ease-[var(--ease-out)]"
+            >
+              <h3 className="text-sm font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)]">
+                {post.title}
+              </h3>
+              <p className="mt-1 text-xs text-text-muted line-clamp-1">
+                {post.excerpt}
+              </p>
+              <span className="mt-2 inline-block text-xs font-medium text-accent">
+                {post.readTime}
+              </span>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+      {/* Desktop: show all */}
+      <div className="hidden md:block space-y-4">
         {posts.map((post, i) => (
           <motion.div key={post.slug} {...staggeredFadeInUp(i * 0.06)}>
             <Link

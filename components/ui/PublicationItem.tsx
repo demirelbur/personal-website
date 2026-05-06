@@ -158,10 +158,10 @@ export function PublicationItem({
         type="button"
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
-        className="w-full text-left flex items-start md:items-center justify-between gap-3 md:gap-4 p-4 md:p-5 cursor-pointer"
+        className="w-full text-left flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 p-4 md:p-5 cursor-pointer"
       >
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm md:text-sm font-semibold md:font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-snug">
+          <h3 className="text-[13px] md:text-sm font-semibold md:font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-snug">
             {publication.title}
           </h3>
           {showAuthors && (
@@ -169,7 +169,7 @@ export function PublicationItem({
               {publication.authors}
             </p>
           )}
-          <p className="mt-1 text-xs text-text-muted line-clamp-1">
+          <p className="hidden md:block mt-1 text-xs text-text-muted line-clamp-1">
             {publication.summary}
           </p>
         </div>

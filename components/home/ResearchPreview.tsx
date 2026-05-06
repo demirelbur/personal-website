@@ -25,7 +25,14 @@ export function ResearchPreview() {
         title={copy.sections.research.title}
         subtitle={copy.sections.research.subtitle}
       />
-      <div className="space-y-4">
+      {/* Mobile: show 3 items */}
+      <div className="space-y-3 md:hidden">
+        {selected.slice(0, 3).map((pub, i) => (
+          <PublicationItem key={pub.title} publication={pub} index={i} />
+        ))}
+      </div>
+      {/* Desktop: show all */}
+      <div className="hidden md:block space-y-4">
         {selected.map((pub, i) => (
           <PublicationItem key={pub.title} publication={pub} index={i} />
         ))}

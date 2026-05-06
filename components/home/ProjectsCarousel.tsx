@@ -3,11 +3,43 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
+import { Button } from "@/components/ui/Button";
 import { projects } from "@/content/projects";
 import type { Project } from "@/content/projects";
 import { copy } from "@/content/copy";
 
 const carouselProjects = projects.filter((p) => p.featured || p.flagship);
+
+function MobileProjectCard({ project }: { project: Project }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="block group"
+    >
+      <div className="p-5 rounded-[var(--radius-lg)] border border-border bg-bg-secondary hover:bg-bg-elevated transition-all duration-[var(--duration-base)] ease-[var(--ease-out)]">
+        {project.category && (
+          <p className="text-[10px] font-medium text-text-muted uppercase tracking-[0.15em] mb-2">
+            {project.category}
+          </p>
+        )}
+        <h3 className="text-base font-semibold text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-tight">
+          {project.title}
+        </h3>
+        {project.mobileHighlight && (
+          <p className="mt-2 text-xs text-accent font-medium">
+            {project.mobileHighlight}
+          </p>
+        )}
+        <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-2">
+          {project.description}
+        </p>
+        <span className="mt-3 inline-block text-xs font-medium text-accent">
+          View project &rarr;
+        </span>
+      </div>
+    </Link>
+  );
+}
 
 function CarouselCard({ project }: { project: Project }) {
   const tags = project.tech.slice(0, 4);
@@ -218,7 +250,19 @@ export function ProjectsCarousel() {
         </div>
       </div>
 
-      {/* Carousel track */}
+      {/* Mobile: simplified vertical list (top 2) */}
+      <div className="md:hidden space-y-4">
+        {carouselProjects.slice(0, 2).map((project) => (
+          <MobileProjectCard key={project.slug} project={project} />
+        ))}
+        <div className="pt-2">
+          <Button href="/projects" variant="text">
+            View all projects →
+          </Button>
+        </div>
+      </div>
+
+      {/* Desktop: Carousel track */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -226,7 +270,7 @@ export function ProjectsCarousel() {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mx-4 px-4 md:-mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+        className="hidden md:flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
         role="region"
         aria-label="Projects carousel"
       >
@@ -234,15 +278,15 @@ export function ProjectsCarousel() {
           <div
             key={project.slug}
             data-card
-            className="w-[85vw] md:w-[560px] lg:w-[620px] shrink-0 snap-start"
+            className="w-[560px] lg:w-[620px] shrink-0 snap-start"
           >
             <CarouselCard project={project} />
           </div>
         ))}
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between mt-6">
+      {/* Desktop: Pagination */}
+      <div className="hidden md:flex items-center justify-between mt-6">
         <div className="flex items-center gap-3">
           {carouselProjects.map((_, i) => (
             <button
@@ -259,20 +303,6 @@ export function ProjectsCarousel() {
               {String(i + 1).padStart(2, "0")}
             </button>
           ))}
-        </div>
-
-        {/* Mobile arrows */}
-        <div className="flex md:hidden items-center gap-2">
-          <ArrowButton
-            direction="left"
-            onClick={handlePrev}
-            disabled={activeIndex === 0}
-          />
-          <ArrowButton
-            direction="right"
-            onClick={handleNext}
-            disabled={activeIndex === carouselProjects.length - 1}
-          />
         </div>
       </div>
     </Section>
