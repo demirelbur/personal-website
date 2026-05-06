@@ -3,11 +3,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { PublicationItem, BookItem } from "@/components/ui/PublicationItem";
 import { publications, book } from "@/content/publications";
-import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 
 export const metadata = {
-  title: `Research — ${profile.name}`,
+  title: "Research & Publications",
+  description:
+    "25+ peer-reviewed papers and 15+ patents in reinforcement learning, control systems, RAN optimization, and production ML. 500+ citations.",
 };
 
 export default function ResearchPage() {

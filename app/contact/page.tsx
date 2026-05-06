@@ -6,7 +6,9 @@ import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 
 export const metadata = {
-  title: `Contact — ${profile.name}`,
+  title: "Contact",
+  description:
+    "Get in touch for research collaborations, consulting, or engineering challenges in production RL, agentic AI, and ML infrastructure.",
 };
 
 export default function ContactPage() {

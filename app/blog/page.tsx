@@ -7,7 +7,9 @@ import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 
 export const metadata = {
-  title: `Blog — ${profile.name}`,
+  title: "Blog",
+  description:
+    "Technical deep-dives on distributed RL, agentic AI, model compression, and production ML systems engineering.",
 };
 
 export default function WritingPage() {
@@ -23,18 +25,21 @@ export default function WritingPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="block group p-5 rounded-[var(--radius-md)] border border-border hover:bg-bg-secondary transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5"
+              className="block group p-4 md:p-5 rounded-[var(--radius-md)] border border-border hover:bg-bg-secondary transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] hover:-translate-y-0.5"
             >
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)]">
                     {post.title}
                   </h3>
-                  <p className="mt-2 text-sm text-text-secondary">
+                  <p className="mt-2 text-sm text-text-secondary line-clamp-2 md:line-clamp-none">
                     {post.excerpt}
                   </p>
+                  <span className="mt-2 inline-block text-xs font-medium text-accent md:hidden">
+                    Read post &rarr;
+                  </span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-text-muted whitespace-nowrap shrink-0">
+                <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs text-text-muted whitespace-nowrap shrink-0">
                   <span>{post.date}</span>
                   <span>{post.readTime}</span>
                 </div>

@@ -4,7 +4,9 @@ import { profile } from "@/content/profile";
 import { experience, education } from "@/content/experience";
 
 export const metadata = {
-  title: `About — ${profile.name}`,
+  title: "About",
+  description:
+    "ML Systems Engineer building production-grade AI for telecom networks. Background in reinforcement learning, distributed systems, and control.",
 };
 
 const focusAreas = [

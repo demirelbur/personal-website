@@ -158,14 +158,14 @@ export function PublicationItem({
         type="button"
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
-        className="w-full text-left flex items-center justify-between gap-4 p-5 cursor-pointer"
+        className="w-full text-left flex items-start md:items-center justify-between gap-3 md:gap-4 p-4 md:p-5 cursor-pointer"
       >
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)]">
+          <h3 className="text-sm md:text-sm font-semibold md:font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-snug">
             {publication.title}
           </h3>
           {showAuthors && (
-            <p className="mt-1 text-xs text-text-muted truncate">
+            <p className="hidden md:block mt-1 text-xs text-text-muted truncate">
               {publication.authors}
             </p>
           )}
@@ -173,11 +173,11 @@ export function PublicationItem({
             {publication.summary}
           </p>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="text-xs font-medium text-accent bg-accent-soft px-2 py-1 rounded-[var(--radius-sm)]">
+        <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <span className="text-[10px] md:text-xs font-medium text-accent bg-accent-soft px-1.5 md:px-2 py-0.5 md:py-1 rounded-[var(--radius-sm)]">
             {publication.venueShort || publication.venue}
           </span>
-          <span className="text-xs text-text-muted">{publication.year}</span>
+          <span className="text-[10px] md:text-xs text-text-muted">{publication.year}</span>
           <Chevron expanded={expanded} />
         </div>
       </button>
