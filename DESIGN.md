@@ -210,7 +210,8 @@ Mobile First approach.
 - 12-column grid on desktop (lg, xl).
 - Gutter: 24px.
 - Hero uses `md:grid-cols-12` with 7/5 split.
-- Project grid uses `md:grid-cols-2`.
+- Project carousel uses horizontal scroll-snap.
+- Focus cards use `md:grid-cols-2`.
 
 ### 3.3 Section Spacing
 
@@ -271,17 +272,61 @@ Content structure:
 - Outcome (text-muted, xs)
 - "Case study →" on hover (opacity transition)
 
-### 4.3 Navbar (`components/layout/Navbar.tsx`)
+### 4.3 Projects Carousel (`components/home/ProjectsCarousel.tsx`)
+
+Homepage projects use a horizontal scroll-snap carousel:
+- Scroll-snap container with `scroll-snap-type: x mandatory`
+- Cards: `scroll-snap-align: start`, full-width on mobile, 85% on desktop
+- Arrow navigation buttons and pagination indicators (01 02 03 04)
+- Mouse drag support for desktop interaction
+- Keyboard navigation (left/right arrows)
+
+Carousel card structure:
+- Category meta (uppercase, tracking, muted)
+- Title (xl–2xl, accent on hover)
+- Divider line
+- Summary metrics row (label/value pairs)
+- Accent bar (2px, purple)
+- Description
+- Tech tags
+- Takeaway line
+
+### 4.4 Navbar (`components/layout/Navbar.tsx`)
 
 - Height: 72px
 - Background: transparent (blur on scroll)
 - Sticky on scroll, z-50
-- Logo: `{profile.initials}.` with accent dot (from content)
+- Logo: theme-aware image (`/logo-dark.png` / `/logo-light.png`)
 - Links: from `content/navigation.ts`
-- Right side: theme toggle icon
-- Mobile: hamburger menu with slide-down panel
+- Right side: Ask AI button, theme toggle icon
+- Mobile: hamburger menu with slide-down panel (includes Ask AI link)
 
-### 4.4 Badges / Tags (`components/ui/Badge.tsx`)
+### 4.5 Ask AI (`components/AskAI.tsx`)
+
+A right-side slide-over chat panel for AI-powered Q&A about website content.
+
+Components:
+- `AskAIButton` — compact navbar button with lightbulb icon
+- `AskAIPanel` — full slide-over panel rendered via React portal
+- `useAskAI` — hook managing open/close state, Cmd+I / Ctrl+I keyboard shortcut
+
+Panel features:
+- Multi-turn chat interface with message history
+- User messages as right-aligned bubbles (accent background)
+- AI responses with sources (linked cards)
+- Suggested questions shown when chat is empty
+- "+" button for new chat
+- Escape to close, backdrop click to close
+- Auto-scroll to latest message
+- Loading indicator (animated dots)
+
+Design:
+- Fixed right panel: `w-full md:w-[420px]`
+- z-index: 999 (panel), 998 (backdrop)
+- Slide-in animation: `translate-x-0` / `translate-x-full`
+- Backdrop: `bg-black/40 backdrop-blur-sm`
+
+### 4.6 Badges / Tags (`components/ui/Badge.tsx`)
 
 - Background: `--bg-primary`
 - Border: 1px solid `--border`
@@ -290,7 +335,7 @@ Content structure:
 - Padding: 4px 10px
 - Font size: 12px
 
-### 4.5 Code Block (`components/ui/CodeBlock.tsx`)
+### 4.7 Code Block (`components/ui/CodeBlock.tsx`)
 
 - Background: `--bg-secondary`
 - Border: 1px solid `--border`
@@ -301,18 +346,18 @@ Content structure:
 - Keywords highlighted in `--accent`
 - Shadow: `--shadow-md`
 
-### 4.6 Publication Item (`components/ui/PublicationItem.tsx`)
+### 4.8 Publication Item (`components/ui/PublicationItem.tsx`)
 
 - Title (font-medium, text-primary, group-hover accent)
 - Authors (optional, text-muted, truncated)
 - Summary (text-muted, 1 line clamp)
-- Venue badge (accent-soft background, accent text, `--radius-sm`)
+- Venue badge (accent-soft background, accent text, `--radius-sm`, non-clickable)
 - Year (text-muted)
 - Arrow link → (accent)
 - Hover: background elevated, translate-y -2px
 - Staggered scroll-triggered animation
 
-### 4.7 Social Icons (`components/ui/SocialIcons.tsx`)
+### 4.9 Social Icons (`components/ui/SocialIcons.tsx`)
 
 - Size: 20px icon inside 36×36px hit target
 - Container: explicit `w-[36px] h-[36px]` (avoids spacing token override)
@@ -321,7 +366,7 @@ Content structure:
 - Border radius: `--radius-sm`
 - Platforms: GitHub, LinkedIn, Google Scholar, Email (from `content/social.ts`)
 
-### 4.8 Theme Toggle
+### 4.10 Theme Toggle
 
 - Sun icon (in dark mode) / Moon icon (in light mode)
 - Border radius: `--radius-sm`
@@ -329,17 +374,23 @@ Content structure:
 - Persists to `localStorage` via `ThemeProvider` (`lib/theme.tsx`)
 - Toggles `data-theme` attribute on `<html>` element
 
-### 4.9 Section Heading (`components/ui/SectionHeading.tsx`)
+### 4.11 Section Heading (`components/ui/SectionHeading.tsx`)
 
 - Title: H2 scale (text-2xl → md:text-[40px])
 - Subtitle: text-sm, text-secondary
 - Margin bottom: 32px
 
-### 4.10 FadeIn (`components/ui/FadeIn.tsx`)
+### 4.12 FadeIn (`components/ui/FadeIn.tsx`)
 
 - Reusable scroll-triggered fade wrapper
 - Uses centralized `ease` from `lib/motion.ts`
 - Supports custom delay
+
+### 4.13 PostBody (`components/ui/PostBody.tsx`)
+
+- Renders blog post content (markdown via ReactMarkdown)
+- Custom component styling for headings, paragraphs, lists, links, code
+- Reduced margins: h2 `mt-6 mb-2`, h3 `mt-4 mb-1.5`, p `mb-3`
 
 ---
 
@@ -352,18 +403,29 @@ Strict separation between HOW things look and WHAT is shown:
 ```
 /content          ← Single source of truth for all displayed text
   profile.ts        Name, role, headline, bio, focus areas, stats, email
-  projects.ts       Projects with problem/solution/impact
+  projects.ts       Projects with problem/solution/impact, carousel metadata
   publications.ts   Research papers, patents with authors, venue, year (types: journal, conference, preprint, techreport, patent)
-  writing.ts        Blog posts
-  experience.ts     Work history + education
+  writing.ts        Blog posts (body as template literal markdown)
+  experience.ts     Work history + education (with bullet-point highlights)
   social.ts         Social links
   navigation.ts     Nav items
   copy.ts           All UI copy (section headings, button labels, page text, footer)
 
 /components       ← Zero hardcoded text
   /layout           Container, Section, Navbar, Footer
-  /home             Hero, SelectedProjects, ResearchPreview, WritingPreview, AboutPreview, ContactCTA
-  /ui               Button, Badge, ProjectCard, PublicationItem, CodeBlock, SocialIcons, FadeIn, SectionHeading
+  /home             Hero, ProjectsCarousel, SelectedProjects, ResearchPreview, WritingPreview, AboutPreview, ContactCTA
+  /ui               Button, Badge, ProjectCard, PublicationItem, CodeBlock, SocialIcons, FadeIn, SectionHeading, PostBody
+  AskAI.tsx         Ask AI panel (slide-over chat)
+
+/api              ← Python serverless backend
+  ask.py            FastAPI endpoint for Ask AI (Pydantic AI Agent + OpenRouter)
+
+/scripts          ← Offline utilities
+  generate-search-embeddings.py   Generate static embeddings for semantic search
+
+/public
+  search-index.json              64 records covering all site content
+  search-index.embeddings.json   Pre-computed embeddings (text-embedding-3-small)
 
 /lib              ← Shared utilities
   motion.ts         Centralized Framer Motion configs
@@ -388,9 +450,9 @@ Strict separation between HOW things look and WHAT is shown:
 
 1. Navbar
 2. Hero
-3. Selected Projects
+3. Projects Carousel
 4. Research / Publications
-5. Writing
+5. Blog (Writing)
 6. About
 7. Contact CTA
 8. Footer
@@ -410,23 +472,45 @@ Strict separation between HOW things look and WHAT is shown:
 - Code snippet card (CodeBlock) — domain-relevant pseudocode
 - Stats card — papers/patents/citations from `profile.stats`
 
-### About Page
+### About Page (`/about`)
 
-- Profile image (`public/burak_demirel.jpg`, 120×120, rounded `--radius-lg`)
-- Bio paragraphs from `profile.bio`
-- Focus areas from `profile.focusAreas`
-- Experience from `experience.ts`
-- Education from `experience.ts`
+Structured as a scannable, section-based layout (not a CV-style page):
+
+1. **Hero** — Profile image (left) + heading, subtitle with purple accent line, intro text (right)
+2. **Feature block** — "From control to production AI" wide card with purple border, icon + text
+3. **Focus areas** — "What I focus on" 2×2 card grid with 56px icon containers
+4. **Principles** — "How I work" lightweight 4-column row (no enclosing card)
+5. **Stats strip** — Proof-point credibility bar (purple border, icon + value + label)
+6. **Experience** — Cards with building icon, bullet highlights, date alignment
+7. **Education** — Single-column compact cards with graduation cap icon
+8. **CTA** — Centered primary (Get in Touch) + secondary (View Projects) buttons
+
+#### Icon system (About page)
+
+Inline SVGs (no icon library dependency). Consistent sizing:
+- Feature block, focus cards, experience, education: 56×56px container (`w-14 h-14`), 20px icon (`w-5 h-5`), `rounded-[var(--radius-md)]`, `bg-accent/10`
+- "How I work" principles: bare 20px icons, no container
+- Stats strip: bare 20px icons, no container
+
+#### Section labels
+
+Uppercase, tracking-widest, `text-xs`, `text-text-muted`, consistent across all About page sections.
+
+### Blog (`/blog`, `/blog/[slug]`)
+
+- Post list with title, date, reading time, description
+- Post detail with ReactMarkdown rendering via PostBody component
+- Posts stored as template literal `body` fields in `content/writing.ts`
+
+### Projects (`/projects`, `/projects/[slug]`)
+
+- `/projects` — Vertical stack of cards matching carousel card style
+- `/projects/[slug]` — Full case study (problem, solution, impact)
 
 ### Other Pages
 
-- `/projects` — grid of project cards
-- `/projects/[slug]` — full case study (problem, solution, impact)
-- `/research` — grouped by type (book, preprints, journals, conferences, patents)
-- `/writing` — list of post entries
-- `/writing/[slug]` — full article (MDX-ready)
-- `/about` — photo, bio, experience, education
-- `/contact` — email, social links
+- `/research` — Grouped by type (book, preprints, journals, conferences, patents)
+- `/contact` — Email, social links
 
 ---
 
@@ -462,6 +546,8 @@ Strict separation between HOW things look and WHAT is shown:
 - Reduced motion support via `prefers-reduced-motion`
 - `safe-area-inset` for notch devices
 - `aria-label` on icon-only buttons and links
+- Icons: `aria-hidden="true"` on decorative icons
+- Dialog: `role="dialog"` and `aria-modal="true"` on Ask AI panel
 
 ---
 
@@ -472,11 +558,41 @@ Strict separation between HOW things look and WHAT is shown:
 - Tailwind CSS v4 (`@tailwindcss/postcss`, `@theme` with runtime CSS variable references for theme switching)
 - Framer Motion
 - MDX support via `@next/mdx`
-- Vercel deployment (zero config)
+- Python (FastAPI) serverless functions for Ask AI backend
+- Pydantic AI Agent with OpenRouter (GPT-4o-mini)
+- uv as Python package manager
+- Vercel deployment (Next.js + Python functions)
 
 ---
 
-## 10. Success Criteria
+## 10. Ask AI System
+
+### Architecture
+
+Client-side chat panel → `/api/ask` (FastAPI) → Pydantic AI Agent (OpenRouter GPT-4o-mini)
+
+### Search pipeline
+
+1. **Semantic search** (primary): Embed user question via OpenRouter embeddings API → cosine similarity against pre-computed vectors → top 5 records
+2. **Lexical search** (fallback): Token matching with title boost (2×) and tag boost (1.5×) → top 5 records
+3. **Context building**: Concatenate top records (max 6000 chars) → pass to AI agent
+
+### Data
+
+- `public/search-index.json` — 64 records covering all site content (id, title, section, url, tags, content)
+- `public/search-index.embeddings.json` — Pre-computed embeddings (generated offline via `scripts/generate-search-embeddings.py`)
+
+### Deployment
+
+- `api/ask.py` runs as a Vercel Python serverless function
+- `vercel.json` configures routing and Python runtime (`@vercel/python@4.5.1`)
+- `requirements.txt` — minimal deps: fastapi, httpx, pydantic, pydantic-ai-slim[openai]
+- Environment variable: `OPENROUTER_API_KEY` (set in Vercel dashboard)
+- Local dev: Next.js rewrites `/api/ask` → `localhost:8000` (development only)
+
+---
+
+## 11. Success Criteria
 
 The site is successful if:
 
@@ -486,3 +602,4 @@ The site is successful if:
 - Performance is fast (LCP < 2.5s, CLS < 0.1)
 - Design feels intentional, not trendy
 - All content can be updated by editing `/content/*.ts` files only
+- Ask AI provides grounded, source-backed answers about website content

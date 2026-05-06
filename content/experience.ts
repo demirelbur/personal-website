@@ -14,10 +14,10 @@ export const experience: Experience[] = [
     location: "Kista, Sweden",
     highlights: [
       "Architected a distributed multi-agent, multi-objective reinforcement learning platform for 5G coverage and capacity optimization.",
-      "Led production-oriented development of AI-native link adaptation, including policy distillation and latency-aware model refinement.",
-      "Built and standardized a PyTorch-native reinforcement learning library adopted by 100+ engineers and researchers.",
-      "Contributed to agentic AI systems for autonomous 5G operations, combining reinforcement learning, Bayesian optimization, and LLM-based reasoning.",
-      "Mentored engineers and advised teams on deployment constraints, long-term architecture, and production ML practices.",
+      "Built distributed training pipelines and simulators for large-scale experimentation and evaluation in 5G environments.",
+      "Led the design of AI-native systems for autonomous 5G operations using reinforcement learning, Bayesian optimization, and LLM reasoning.",
+      "Accelerated AI-native link adaptation from research prototypes to production with compact, efficient models.",
+      "Mentored engineers and advised teams on deployment constraints, system architecture, and long-term ML platform design.",
     ],
   },
   {
@@ -27,9 +27,9 @@ export const experience: Experience[] = [
     location: "Kista, Sweden",
     highlights: [
       "Established the commercial viability of AI-native link adaptation through early research, proof-of-concept development, and collaboration with product units.",
-      "Designed scalable training architectures for high-throughput reinforcement learning, reducing distributed training time by a factor of 20.",
-      "Built GPU-accelerated distributed RL systems with 100+ CPU actors using Redis, ZeroMQ, and PyTorch RPC.",
-      "Delivered measurable performance gains in production-grade 5G RAN systems under real-world latency, reliability, and hardware constraints.",
+      "Designed scalable training architectures for high-throughput reinforcement learning on HPC infrastructure.",
+      "Reduced distributed reinforcement learning training time by approximately 20× using high-throughput actors, optimized scheduling, and PyTorch RPC.",
+      "Delivered measurable production improvements in 5G RAN systems under real-world latency, reliability, and hardware constraints.",
       "Co-authored technical papers and presented system-level insights to senior stakeholders.",
     ],
   },
@@ -74,7 +74,8 @@ export const education: Education[] = [
     institution: "KTH Royal Institute of Technology",
     period: "2009 – 2015",
     location: "Stockholm, Sweden",
-    detail: "Thesis: Architectures and Performance Analysis of Wireless Control Systems",
+    detail:
+      "Thesis: Architectures and Performance Analysis of Wireless Control Systems",
   },
   {
     degree: "MSc, Mechatronics Engineering",
