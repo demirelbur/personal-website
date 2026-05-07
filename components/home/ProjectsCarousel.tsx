@@ -228,7 +228,7 @@ export function ProjectsCarousel() {
   return (
     <Section id="projects">
       <div className="flex items-end justify-between">
-        <div className="mb-8">
+        <div className="mb-5 md:mb-8">
           <h2 className="text-2xl md:text-[40px] md:leading-[48px] font-semibold tracking-tight text-text-primary">
             {copy.sections.projects.title}
           </h2>
@@ -257,7 +257,7 @@ export function ProjectsCarousel() {
         ))}
         <div className="pt-2">
           <Button href="/projects" variant="text">
-            View all projects →
+            {copy.sections.projects.viewAll}
           </Button>
         </div>
       </div>

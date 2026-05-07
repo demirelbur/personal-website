@@ -14,10 +14,10 @@ export function ContactCTA() {
           <h2 className="text-2xl md:text-[40px] md:leading-[48px] font-semibold tracking-tight text-text-primary">
             {copy.sections.contact.title}
           </h2>
-          <p className="mt-4 text-text-secondary">
+          <p className="mt-3 md:mt-4 text-text-secondary">
             {copy.sections.contact.subtitle}
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-6 md:mt-8 flex justify-center gap-4">
             <Button href={`mailto:${profile.email}`}>
               {copy.sections.contact.cta}
             </Button>

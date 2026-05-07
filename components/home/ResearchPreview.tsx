@@ -37,7 +37,7 @@ export function ResearchPreview() {
           <PublicationItem key={pub.title} publication={pub} index={i} />
         ))}
       </div>
-      <div className="mt-8">
+      <div className="mt-5 md:mt-8">
         <Button href="/research" variant="text">
           {copy.sections.research.viewAll}
         </Button>

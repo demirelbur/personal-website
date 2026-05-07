@@ -62,7 +62,7 @@ export function WritingPreview() {
           </motion.div>
         ))}
       </div>
-      <div className="mt-8">
+      <div className="mt-5 md:mt-8">
         <Button href="/blog" variant="text">
           {copy.sections.writing.viewAll}
         </Button>

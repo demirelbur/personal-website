@@ -18,14 +18,14 @@ export function AboutPreview() {
           <h2 className="text-2xl md:text-[40px] md:leading-[48px] font-semibold tracking-tight text-text-primary">
             {copy.sections.about.title}
           </h2>
-          <p className="mt-6 text-text-secondary leading-relaxed">
+          <p className="mt-4 md:mt-6 text-text-secondary leading-relaxed">
             {bioParas[0]}
           </p>
-          <p className="mt-4 text-text-secondary leading-relaxed">
+          <p className="mt-3 md:mt-4 text-text-secondary leading-relaxed">
             {bioParas[1]}
           </p>
 
-          <div className="mt-8 p-4 rounded-[var(--radius-md)] border border-border bg-bg-primary">
+          <div className="mt-6 md:mt-8 p-4 rounded-[var(--radius-md)] border border-border bg-bg-primary">
             <p className="text-xs text-text-muted uppercase tracking-wide">
               {copy.ui.current}
             </p>
@@ -37,7 +37,7 @@ export function AboutPreview() {
             </p>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6 md:mt-8">
             <Button href="/about" variant="text">
               {copy.sections.about.cta}
             </Button>

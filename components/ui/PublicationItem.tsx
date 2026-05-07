@@ -291,24 +291,24 @@ export function BookItem({ book }: BookItemProps) {
         type="button"
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
-        className="w-full text-left flex items-center justify-between gap-4 p-5 cursor-pointer"
+        className="w-full text-left flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 p-4 md:p-5 cursor-pointer"
       >
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)]">
+          <h3 className="text-[13px] md:text-sm font-semibold md:font-medium text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-snug">
             {book.title}
           </h3>
           <p className="mt-1 text-xs text-text-muted truncate">
             {book.authors}
           </p>
-          <p className="mt-1 text-xs text-text-muted line-clamp-1">
+          <p className="hidden md:block mt-1 text-xs text-text-muted line-clamp-1">
             {book.summary}
           </p>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="text-xs font-medium text-accent bg-accent-soft px-2 py-1 rounded-[var(--radius-sm)]">
+        <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <span className="text-[10px] md:text-xs font-medium text-accent bg-accent-soft px-1.5 md:px-2 py-0.5 md:py-1 rounded-[var(--radius-sm)]">
             {book.publisher}
           </span>
-          <span className="text-xs text-text-muted">{book.year}</span>
+          <span className="text-[10px] md:text-xs text-text-muted">{book.year}</span>
           <Chevron expanded={expanded} />
         </div>
       </button>
