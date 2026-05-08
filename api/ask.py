@@ -12,15 +12,15 @@ import time
 from pathlib import Path
 from typing import Optional
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("ask-ai")
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.models.openrouter import OpenRouterModel
 from pydantic_ai.providers.openrouter import OpenRouterProvider
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("ask-ai")
 
 app = FastAPI()
 
@@ -77,9 +77,7 @@ def load_records() -> list[SearchRecord]:
 
 
 def load_embeddings() -> Optional[dict[str, list[float]]]:
-    emb_path = (
-        Path(__file__).parent.parent / "public" / "search-index.embeddings.json"
-    )
+    emb_path = Path(__file__).parent.parent / "public" / "search-index.embeddings.json"
     if not emb_path.exists():
         return None
     with open(emb_path, "r") as f:
@@ -103,23 +101,141 @@ def cosine_similarity(a: list[float], b: list[float]) -> float:
     return dot / (norm_a * norm_b)
 
 
+STOPWORDS = {
+    "a",
+    "an",
+    "the",
+    "is",
+    "are",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "have",
+    "has",
+    "had",
+    "do",
+    "does",
+    "did",
+    "will",
+    "would",
+    "could",
+    "should",
+    "may",
+    "might",
+    "shall",
+    "can",
+    "need",
+    "dare",
+    "ought",
+    "used",
+    "to",
+    "of",
+    "in",
+    "for",
+    "on",
+    "with",
+    "at",
+    "by",
+    "from",
+    "as",
+    "into",
+    "through",
+    "during",
+    "before",
+    "after",
+    "above",
+    "below",
+    "between",
+    "out",
+    "off",
+    "over",
+    "under",
+    "again",
+    "further",
+    "then",
+    "once",
+    "here",
+    "there",
+    "when",
+    "where",
+    "why",
+    "how",
+    "all",
+    "each",
+    "every",
+    "both",
+    "few",
+    "more",
+    "most",
+    "other",
+    "some",
+    "such",
+    "no",
+    "nor",
+    "not",
+    "only",
+    "own",
+    "same",
+    "so",
+    "than",
+    "too",
+    "very",
+    "just",
+    "because",
+    "but",
+    "and",
+    "or",
+    "if",
+    "while",
+    "about",
+    "what",
+    "which",
+    "who",
+    "whom",
+    "this",
+    "that",
+    "these",
+    "those",
+    "am",
+    "it",
+    "its",
+    "he",
+    "she",
+    "they",
+    "we",
+    "you",
+    "i",
+    "me",
+    "him",
+    "her",
+    "us",
+    "them",
+    "my",
+    "your",
+    "his",
+    "our",
+    "their",
+}
+
+
 def lexical_search(
     question: str, records: list[SearchRecord], top_k: int = 5
 ) -> list[SearchRecord]:
     question_lower = question.lower()
-    tokens = set(re.findall(r"\w+", question_lower))
+    tokens = set(re.findall(r"\w+", question_lower)) - STOPWORDS
 
     scored = []
     for record in records:
         text = f"{record.title} {record.section} {' '.join(record.tags)} {record.content}".lower()
         score = sum(1 for token in tokens if token in text)
-        title_boost = sum(2 for token in tokens if token in record.title.lower())
+        title_boost = sum(3 for token in tokens if token in record.title.lower())
         tag_boost = sum(
-            1.5
-            for token in tokens
-            if any(token in tag.lower() for tag in record.tags)
+            2 for token in tokens if any(token in tag.lower() for tag in record.tags)
         )
-        scored.append((record, score + title_boost + tag_boost))
+        section_boost = sum(4 for token in tokens if token in record.section.lower())
+        scored.append((record, score + title_boost + tag_boost + section_boost))
 
     scored.sort(key=lambda x: x[1], reverse=True)
     return [r for r, _ in scored[:top_k]]
@@ -179,7 +295,7 @@ async def semantic_search(
 # --- Context building ---
 
 
-def build_context(records: list[SearchRecord], max_chars: int = 6000) -> str:
+def build_context(records: list[SearchRecord], max_chars: int = 10000) -> str:
     parts = []
     total = 0
     for record in records:
@@ -206,7 +322,7 @@ SYSTEM_PROMPT = (
 )
 
 
-def create_agent() -> Agent:
+def create_agent() -> Agent[None, AskResponse]:
     """Create a Pydantic AI Agent configured with OpenRouter and OpenAI gpt-4o-mini."""
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
@@ -226,6 +342,8 @@ def create_agent() -> Agent:
     return Agent(
         model,
         system_prompt=SYSTEM_PROMPT,
+        output_type=AskResponse,  # type: ignore[arg-type]
+        output_retries=4,
     )
 
 
@@ -249,11 +367,27 @@ async def ask(request: AskRequest) -> AskResponse:
     start = time.time()
     logger.info("Question received: %s", question[:100])
 
-    # Try semantic search first, fall back to lexical
-    results = await semantic_search(question, RECORDS, top_k=5)
-    search_method = "semantic" if results is not None else "lexical"
-    if results is None:
-        results = lexical_search(question, RECORDS, top_k=5)
+    # Hybrid search: merge semantic and lexical results
+    semantic_results = await semantic_search(question, RECORDS, top_k=5)
+    lexical_results = lexical_search(question, RECORDS, top_k=5)
+
+    if semantic_results is not None:
+        search_method = "hybrid"
+        seen_ids = set()
+        results = []
+        for r in semantic_results[:3]:
+            if r.id not in seen_ids:
+                results.append(r)
+                seen_ids.add(r.id)
+        for r in lexical_results:
+            if r.id not in seen_ids:
+                results.append(r)
+                seen_ids.add(r.id)
+            if len(results) >= 6:
+                break
+    else:
+        search_method = "lexical"
+        results = lexical_results
 
     context = build_context(results)
 
@@ -266,8 +400,26 @@ async def ask(request: AskRequest) -> AskResponse:
         logger.error("Agent failed: %s", str(e))
         raise HTTPException(status_code=502, detail="AI service unavailable")
 
-    sources = [Source(title=r.title, section=r.section, url=r.url) for r in results[:3]]
+    # Prefer project/blog/publication sources over generic pages
+    priority_sections = {
+        "Projects",
+        "Blog",
+        "Journal Publications",
+        "Conference Publications",
+        "Technical Reports",
+        "Preprint Publications",
+        "Patents",
+        "Book",
+    }
+    prioritized = sorted(
+        results, key=lambda r: 0 if r.section in priority_sections else 1
+    )
+    sources = [
+        Source(title=r.title, section=r.section, url=r.url) for r in prioritized[:3]
+    ]
     elapsed = time.time() - start
-    logger.info("Answered in %.2fs [%s] sources=%d", elapsed, search_method, len(sources))
+    logger.info(
+        "Answered in %.2fs [%s] sources=%d", elapsed, search_method, len(sources)
+    )
 
     return AskResponse(answer=answer, sources=sources)

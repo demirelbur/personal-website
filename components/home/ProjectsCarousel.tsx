@@ -4,108 +4,168 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
-import { projects } from "@/content/projects";
-import type { Project } from "@/content/projects";
+import { projectCards, type ProjectCardData } from "@/content/projectCards";
 import { copy } from "@/content/copy";
 
-const carouselProjects = projects.filter((p) => p.featured || p.flagship);
+interface CarouselCardContent {
+  category: string;
+  title: string;
+  thesis: string;
+  constraint: string;
+  system: string;
+  impact: string;
+  description: string;
+  chips: string[];
+  outcome: string;
+  href: string;
+}
 
-function MobileProjectCard({ project }: { project: Project }) {
+const carouselContent: CarouselCardContent[] = [
+  {
+    category: "PROJECT / TELECOM AI",
+    title: "AI-Native Link Adaptation",
+    thesis: "Production AI for real-time 5G link adaptation under baseband latency constraints.",
+    constraint: "sub-30μs baseband inference",
+    system: "Distilled RL/GNN inference pipeline",
+    impact: "+20% throughput\n+10% spectral efficiency",
+    description: "Deployed AI-native link adaptation from research prototype to production-facing RAN optimization.",
+    chips: ["PyTorch", "GNNs", "Policy Distillation", "ONNX"],
+    outcome: "Tier‑1 operator deployment",
+    href: "/projects/ai-native-link-adaptation",
+  },
+  {
+    category: "PROJECT / RL SYSTEMS",
+    title: "High-Throughput Distributed RL Training System",
+    thesis: "Scalable RL infrastructure for large-scale experience generation and policy optimization.",
+    constraint: "100+ distributed actors",
+    system: "Distributed CPU/GPU RL pipeline",
+    impact: "20× faster training",
+    description: "Built a high-throughput actor–replay–learner architecture for reproducible large-scale RL experimentation.",
+    chips: ["PyTorch RPC", "Redis", "ZeroMQ", "HPC"],
+    outcome: "20× faster training across 100+ actors",
+    href: "/projects/distributed-rl-training",
+  },
+  {
+    category: "PROJECT / AGENTIC AI",
+    title: "Agentic AI for Autonomous Networks",
+    thesis: "Intent-driven agentic AI that translates high-level network intents into closed-loop control actions.",
+    constraint: "Conflicting network intents",
+    system: "Interpreter + optimizer + MO-RL",
+    impact: "Pareto-aware control",
+    description: "Connected LLM intent interpretation, optimization-based preference derivation, and multi-objective RL control.",
+    chips: ["LLMs", "Agentic AI", "Intent-Based Networking", "Multi-Objective RL"],
+    outcome: "Intent-to-action automation for autonomous networks",
+    href: "/projects/agentic-ai-networks",
+  },
+  {
+    category: "PROJECT / AGENTIC COMMERCE",
+    title: "Agentic Product Recommendation System",
+    thesis: "Conversational product discovery with grounded retrieval and structured validation.",
+    constraint: "Grounded product attributes",
+    system: "RAG + structured validation",
+    impact: "Zero hallucinated attributes",
+    description: "Built a multi-agent recommendation workflow for reliable product discovery with verified attributes.",
+    chips: ["FastAPI", "ChromaDB", "Pydantic", "RAG"],
+    outcome: "Reliable conversational recommendations with verified attributes",
+    href: "/projects/agentic-recommendation",
+  },
+];
+
+function MobileProjectCard({ card }: { card: CarouselCardContent }) {
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="block group"
-    >
-      <div className="p-5 rounded-[var(--radius-lg)] border border-border bg-bg-secondary hover:bg-bg-elevated transition-all duration-[var(--duration-base)] ease-[var(--ease-out)]">
-        {project.category && (
-          <p className="text-[10px] font-medium text-text-muted uppercase tracking-[0.15em] mb-2">
-            {project.category}
-          </p>
-        )}
-        <h3 className="text-base font-semibold text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-tight">
-          {project.title}
-        </h3>
-        {project.mobileHighlight && (
-          <p className="mt-2 text-xs text-accent font-medium">
-            {project.mobileHighlight}
-          </p>
-        )}
-        <p className="mt-2 text-sm text-text-secondary leading-relaxed line-clamp-2">
-          {project.description}
+    <Link href={card.href} className="block group">
+      <div className="p-5 rounded-[var(--radius-lg)] border border-border bg-bg-secondary hover:border-accent/30 transition-all duration-[var(--duration-base)]">
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-[0.15em] mb-2">
+          {card.category}
         </p>
+        <h3 className="text-base font-semibold text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-tight">
+          {card.title}
+        </h3>
+        <p className="mt-2 text-xs text-text-secondary leading-relaxed">
+          {card.thesis}
+        </p>
+        {/* Compact metrics */}
+        <div className="mt-3 flex gap-4">
+          <div>
+            <span className="text-[9px] font-medium text-text-muted uppercase tracking-widest">Impact</span>
+            <p className="text-xs font-semibold text-accent whitespace-pre-line leading-snug mt-0.5">{card.impact}</p>
+          </div>
+        </div>
         <span className="mt-3 inline-block text-xs font-medium text-accent">
-          View project &rarr;
+          View project →
         </span>
       </div>
     </Link>
   );
 }
 
-function CarouselCard({ project }: { project: Project }) {
-  const tags = project.tech.slice(0, 4);
-
+function ShowcaseCard({ card }: { card: CarouselCardContent }) {
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="block group h-full"
-    >
-      <div className="h-full p-8 md:p-10 rounded-[var(--radius-lg)] border border-border bg-bg-secondary hover:bg-bg-elevated transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] flex flex-col">
-        {/* Category meta */}
-        {project.category && (
-          <p className="text-[10px] font-medium text-text-muted uppercase tracking-[0.15em] mb-4">
-            {project.category}
-          </p>
-        )}
+    <Link href={card.href} className="block group h-full">
+      <div className="h-full p-8 md:p-10 rounded-[var(--radius-lg)] border border-border bg-bg-secondary hover:border-accent/30 transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] flex flex-col relative overflow-hidden">
+        {/* Subtle radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[600px] h-[300px] bg-accent/[0.03] rounded-full blur-3xl pointer-events-none" />
 
-        {/* Title */}
-        <h3 className="text-xl md:text-2xl font-semibold text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-tight">
-          {project.title}
-        </h3>
-
-        {/* Divider */}
-        <div className="mt-5 mb-5 h-px bg-border" />
-
-        {/* Summary metrics row */}
-        {project.summaryMetrics && (
-          <div className="flex gap-6 md:gap-8 mb-5">
-            {project.summaryMetrics.map((metric) => (
-              <div key={metric.label} className="flex flex-col">
-                <span className="text-[10px] font-medium text-text-muted uppercase tracking-widest mb-1">
-                  {metric.label}
-                </span>
-                <span className="text-sm font-medium text-text-primary">
-                  {metric.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Accent bar */}
-        <div className="h-0.5 w-16 bg-accent rounded-full opacity-60 mb-5" />
-
-        {/* Description */}
-        <p className="text-sm text-text-secondary leading-relaxed mb-4 flex-1">
-          {project.description}
+        {/* Category */}
+        <p className="text-[10px] font-semibold text-accent uppercase tracking-[0.15em] mb-3 relative">
+          {card.category}
         </p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {tags.map((t) => (
+        {/* Title */}
+        <h3 className="text-xl md:text-2xl font-semibold text-text-primary group-hover:text-accent transition-colors duration-[var(--duration-fast)] leading-tight relative">
+          {card.title}
+        </h3>
+
+        {/* Thesis */}
+        <p className="mt-2 text-sm text-text-secondary leading-relaxed relative">
+          {card.thesis}
+        </p>
+
+        {/* Metric row */}
+        <div className="mt-6 relative">
+          <div className="grid grid-cols-3 gap-4 pb-4 border-b border-border">
+            <div>
+              <span className="text-[9px] font-medium text-text-muted uppercase tracking-widest">Constraint</span>
+              <p className="text-[13px] font-semibold text-text-primary mt-1 leading-snug">{card.constraint}</p>
+            </div>
+            <div>
+              <span className="text-[9px] font-medium text-text-muted uppercase tracking-widest">System</span>
+              <p className="text-[13px] font-semibold text-text-primary mt-1 leading-snug">{card.system}</p>
+            </div>
+            <div>
+              <span className="text-[9px] font-medium text-text-muted uppercase tracking-widest">Impact</span>
+              <p className="text-[13px] font-bold text-accent mt-1 whitespace-pre-line leading-snug">{card.impact}</p>
+            </div>
+          </div>
+          {/* Accent line under metric row */}
+          <div className="absolute bottom-0 right-0 w-24 h-[2px] bg-accent/40 rounded-full" />
+        </div>
+
+        {/* Description */}
+        <p className="mt-5 text-sm text-text-secondary leading-relaxed flex-1 relative">
+          {card.description}
+        </p>
+
+        {/* Tech chips */}
+        <div className="flex flex-wrap gap-1.5 mt-4 relative">
+          {card.chips.map((chip) => (
             <span
-              key={t}
-              className="text-[10px] text-text-muted bg-bg-elevated px-2 py-0.5 rounded-[var(--radius-sm)] border border-border"
+              key={chip}
+              className="text-[10px] text-text-muted px-2 py-0.5 rounded-[var(--radius-sm)] border border-border bg-bg-primary"
             >
-              {t}
+              {chip}
             </span>
           ))}
         </div>
 
-        {/* Takeaway */}
-        <div className="mt-auto pt-3 border-t border-border">
+        {/* Outcome + CTA */}
+        <div className="mt-5 pt-4 border-t border-border flex items-center justify-between relative">
           <p className="text-xs text-text-muted leading-relaxed">
-            {project.takeaway || project.outcome}
+            {card.outcome}
           </p>
+          <span className="text-xs font-medium text-accent shrink-0 ml-4">
+            View project →
+          </span>
         </div>
       </div>
     </Link>
@@ -127,7 +187,7 @@ function ArrowButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={`${direction === "left" ? "Previous" : "Next"} project`}
-      className="w-10 h-10 rounded-full border border-border bg-bg-secondary hover:bg-bg-elevated disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-colors duration-[var(--duration-fast)] cursor-pointer"
+      className="w-10 h-10 rounded-full border border-border bg-bg-secondary hover:bg-bg-elevated hover:border-accent/30 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-colors duration-[var(--duration-fast)] cursor-pointer"
     >
       <svg
         width="16"
@@ -155,7 +215,7 @@ export function ProjectsCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  const scrollLeftPos = useRef(0);
 
   const scrollToIndex = useCallback((index: number) => {
     const container = scrollRef.current;
@@ -174,7 +234,7 @@ export function ProjectsCarousel() {
   }, [activeIndex, scrollToIndex]);
 
   const handleNext = useCallback(() => {
-    if (activeIndex < carouselProjects.length - 1)
+    if (activeIndex < carouselContent.length - 1)
       scrollToIndex(activeIndex + 1);
   }, [activeIndex, scrollToIndex]);
 
@@ -196,11 +256,10 @@ export function ProjectsCarousel() {
     setActiveIndex(closestIndex);
   }, []);
 
-  // Touch/mouse drag
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     isDragging.current = true;
     startX.current = e.pageX - (scrollRef.current?.offsetLeft || 0);
-    scrollLeft.current = scrollRef.current?.scrollLeft || 0;
+    scrollLeftPos.current = scrollRef.current?.scrollLeft || 0;
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -208,14 +267,13 @@ export function ProjectsCarousel() {
     e.preventDefault();
     const x = e.pageX - (scrollRef.current.offsetLeft || 0);
     const walk = (x - startX.current) * 1.2;
-    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+    scrollRef.current.scrollLeft = scrollLeftPos.current - walk;
   }, []);
 
   const handleMouseUp = useCallback(() => {
     isDragging.current = false;
   }, []);
 
-  // Keyboard
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -245,15 +303,15 @@ export function ProjectsCarousel() {
           <ArrowButton
             direction="right"
             onClick={handleNext}
-            disabled={activeIndex === carouselProjects.length - 1}
+            disabled={activeIndex === carouselContent.length - 1}
           />
         </div>
       </div>
 
-      {/* Mobile: simplified vertical list (top 2) */}
+      {/* Mobile: vertical list */}
       <div className="md:hidden space-y-4">
-        {carouselProjects.slice(0, 2).map((project) => (
-          <MobileProjectCard key={project.slug} project={project} />
+        {carouselContent.slice(0, 3).map((card) => (
+          <MobileProjectCard key={card.href} card={card} />
         ))}
         <div className="pt-2">
           <Button href="/projects" variant="text">
@@ -274,13 +332,13 @@ export function ProjectsCarousel() {
         role="region"
         aria-label="Projects carousel"
       >
-        {carouselProjects.map((project) => (
+        {carouselContent.map((card) => (
           <div
-            key={project.slug}
+            key={card.href}
             data-card
-            className="w-[640px] lg:w-[720px] shrink-0 snap-start"
+            className="w-[660px] lg:w-[740px] shrink-0 snap-start"
           >
-            <CarouselCard project={project} />
+            <ShowcaseCard card={card} />
           </div>
         ))}
       </div>
@@ -288,7 +346,7 @@ export function ProjectsCarousel() {
       {/* Desktop: Pagination */}
       <div className="hidden md:flex items-center justify-between mt-6">
         <div className="flex items-center gap-3">
-          {carouselProjects.map((_, i) => (
+          {carouselContent.map((_, i) => (
             <button
               key={i}
               type="button"
@@ -304,6 +362,9 @@ export function ProjectsCarousel() {
             </button>
           ))}
         </div>
+        <Button href="/projects" variant="text">
+          {copy.sections.projects.viewAll}
+        </Button>
       </div>
     </Section>
   );

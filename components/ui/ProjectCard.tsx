@@ -130,7 +130,7 @@ export function ProjectCard({ project }: { project: ProjectCardData }) {
       {/* Stack */}
       <div className="mt-4 pt-4 border-t border-border">
         <p className="text-[10px] font-medium text-text-muted uppercase tracking-widest mb-2">
-          Stack
+          Tech Stack
         </p>
         <div className="flex flex-wrap items-center gap-2">
           {project.stack.map((tech) => (

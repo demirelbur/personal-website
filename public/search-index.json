@@ -1,7 +1,7 @@
 [
     {
         "id": "home-hero",
-        "title": "Burak Demirel — ML Systems Engineer",
+        "title": "Burak Demirel \u2014 ML Systems Engineer",
         "section": "Home",
         "url": "/",
         "tags": [
@@ -31,7 +31,7 @@
             "control",
             "optimization"
         ],
-        "content": "Burak Demirel builds AI systems for environments where models do not get unlimited time, data, or compute. His work sits at the intersection of reinforcement learning, agentic AI, control, and distributed systems — with a focus on turning research ideas into reliable production systems for real-world networks. His background began in control and optimization, where the central question was how to make systems behave reliably under uncertainty. Over time, that question led toward reinforcement learning, distributed training, and AI systems that must operate under strict latency, reliability, and compute constraints. Today, he works on production-grade machine learning systems for telecom networks, including AI-native radio access network optimization, agentic AI for autonomous networks, and scalable reinforcement learning platforms."
+        "content": "Burak Demirel builds AI systems for environments where models do not get unlimited time, data, or compute. His work sits at the intersection of reinforcement learning, agentic AI, control, and distributed systems \u2014 with a focus on turning research ideas into reliable production systems for real-world networks. His background began in control and optimization, where the central question was how to make systems behave reliably under uncertainty. Over time, that question led toward reinforcement learning, distributed training, and AI systems that must operate under strict latency, reliability, and compute constraints. Today, he works on production-grade machine learning systems for telecom networks, including AI-native radio access network optimization, agentic AI for autonomous networks, and scalable reinforcement learning platforms."
     },
     {
         "id": "profile-focus-areas",
@@ -52,7 +52,7 @@
             "autonomous networks",
             "intent-based automation"
         ],
-        "content": "Burak's focus areas include: AI for real-world networks — reinforcement learning and optimization methods for radio access networks, link adaptation, and autonomous control. Production ML systems — distributed training, low-latency inference, model compression, evaluation pipelines, and deployment under operational constraints. Agentic AI — LLM-based reasoning systems connected to optimization and control loops, especially for intent-based network automation. Research-to-production translation — taking ideas from papers and prototypes into systems that engineers can run, measure, maintain, and improve."
+        "content": "Burak's focus areas include: AI for real-world networks \u2014 reinforcement learning and optimization methods for radio access networks, link adaptation, and autonomous control. Production ML systems \u2014 distributed training, low-latency inference, model compression, evaluation pipelines, and deployment under operational constraints. Agentic AI \u2014 LLM-based reasoning systems connected to optimization and control loops, especially for intent-based network automation. Research-to-production translation \u2014 taking ideas from papers and prototypes into systems that engineers can run, measure, maintain, and improve."
     },
     {
         "id": "experience-ericsson-master-researcher",
@@ -127,7 +127,7 @@
     },
     {
         "id": "education-phd",
-        "title": "PhD in Automatic Control — KTH Royal Institute of Technology",
+        "title": "PhD in Automatic Control \u2014 KTH Royal Institute of Technology",
         "section": "Education",
         "url": "/about",
         "tags": [
@@ -142,7 +142,7 @@
     },
     {
         "id": "education-msc",
-        "title": "MSc in Mechatronics Engineering — Istanbul Technical University",
+        "title": "MSc in Mechatronics Engineering \u2014 Istanbul Technical University",
         "section": "Education",
         "url": "/about",
         "tags": [
@@ -155,7 +155,7 @@
     },
     {
         "id": "education-bsc-control",
-        "title": "BSc in Control Engineering — Istanbul Technical University",
+        "title": "BSc in Control Engineering \u2014 Istanbul Technical University",
         "section": "Education",
         "url": "/about",
         "tags": [
@@ -168,7 +168,7 @@
     },
     {
         "id": "education-bsc-mechanical",
-        "title": "BSc in Mechanical Engineering — Istanbul Technical University",
+        "title": "BSc in Mechanical Engineering \u2014 Istanbul Technical University",
         "section": "Education",
         "url": "/about",
         "tags": [
@@ -190,13 +190,15 @@
             "autonomous networks",
             "5G",
             "LLM",
-            "Bayesian optimization",
-            "reinforcement learning",
-            "FastAPI",
+            "intent-based networking",
+            "multi-objective reinforcement learning",
+            "MORL",
+            "Pareto frontier",
             "closed-loop control",
-            "Python"
+            "intent management",
+            "optimization"
         ],
-        "content": "Agentic AI for Autonomous Networks is an agentic AI system for autonomous 5G network operations enabling real-time closed-loop decision-making. The problem was that network operations required manual intervention for optimization decisions, introducing latency and inconsistency in dynamic 5G environments. The solution designed and industrialized an agentic system integrating reinforcement learning, Bayesian optimization, and LLM-based reasoning for autonomous closed-loop control. The outcome was real-time autonomous decision-making in production 5G networks. Technologies include Python, LLMs, Bayesian Optimization, RL, and FastAPI."
+        "content": "Burak Demirel built this project. Agentic AI for Autonomous Networks is an intent-driven agentic AI system that translates high-level network intents into optimization templates, preferences, and closed-loop control actions. Modern telecom networks must support heterogeneous services with different and sometimes conflicting intents such as ultra-low latency, high throughput, energy efficiency, and reliability. Existing heuristic approaches struggle to translate these high-level intents into concrete low-level control actions. The system is organized around three specialized agents: a supervisory interpreter agent powered by language models that parses intents into executable optimization templates with cognitive refinement based on feedback and feasibility; an optimizer agent that converts templates into tractable optimization problems, analyzes trade-offs, and derives preferences across competing objectives; and a preference-driven controller agent based on multi-objective reinforcement learning that operates near the Pareto frontier of network performance. The intent-to-action workflow proceeds from intent expression through interpretation, preference derivation, control execution, and feedback refinement. The architecture separates reasoning, optimization, and control into specialized agents, making the system easier to reason about, evaluate, and extend than a monolithic approach. The outcome is intent-to-action automation with Pareto-aware control for autonomous networks. Technologies include LLMs, Agentic AI, Intent-Based Networking, Multi-Objective RL, and Optimization."
     },
     {
         "id": "project-distributed-rl-training",
@@ -216,9 +218,11 @@
             "actors",
             "replay memory",
             "GPU learner",
-            "asynchronous training"
+            "asynchronous training",
+            "scalable training",
+            "experience generation"
         ],
-        "content": "High-Throughput Distributed RL Training System is a distributed reinforcement learning system designed to scale experience generation and policy optimization across multi-node CPU/GPU infrastructure. Single-node RL training collapses under production workloads because environment interaction is CPU-bound, policy optimization is GPU-bound, and experience throughput must sustain both without bottlenecking either. The system fully decouples actors, replay memory, and learning into independently scalable components across multi-node HPC infrastructure. Distributed actors interact with parallel simulation environments and stream transitions into sharded replay memory. A centralized GPU learner performs gradient updates and asynchronously broadcasts policy weights. Design decisions include fully decoupled components, sharded replay memory with per-shard priority queues, asynchronous weight broadcast, centralized GPU learner processing large minibatches, and horizontally scaled actors. The result was a 20x training speedup over a single-node baseline, 100+ concurrent actors sustaining continuous experience generation, linear scaling across multi-node CPU/GPU infrastructure, and stable convergence under fully asynchronous operation. Technologies include PyTorch, PyTorch RPC, ZeroMQ, Redis, LSF, Slurm, and HPC."
+        "content": "Burak Demirel built this project. High-Throughput Distributed RL Training System is a distributed reinforcement learning system designed to scale experience generation and policy optimization across multi-node CPU/GPU infrastructure. Single-node RL training collapses under production workloads because environment interaction is CPU-bound, policy optimization is GPU-bound, and experience throughput must sustain both without bottlenecking either. Na\u00efve parallelization introduces synchronization overhead that negates the compute gains \u2014 actors stall waiting for weight updates, learners idle waiting for data, and replay buffers become contention points. The system fully decouples actors, replay memory, and learning into independently scalable components across multi-node HPC infrastructure. Distributed actors interact with parallel simulation environments and stream transitions into sharded replay memory. The replay system partitions storage across shards, aggregates experience, and serves prioritized minibatches to the learner. A centralized GPU learner performs gradient updates on sampled batches and asynchronously broadcasts updated policy weights to all actors. Actors never block on learner updates and the learner never blocks on actor throughput, allowing both pipelines to saturate their respective compute independently. Design decisions include fully decoupled components with no shared state eliminating synchronization bottlenecks, sharded replay memory with per-shard priority queues sustaining high write throughput, asynchronous weight broadcast where actors tolerate slightly stale policies, centralized GPU learner processing large minibatches for stable optimization dynamics, and horizontally scaled actors where 100+ CPU workers generate experience in parallel. Results: 20\u00d7 training speedup over single-node baseline, 100+ concurrent actors sustaining continuous experience generation, linear scaling across multi-node CPU/GPU infrastructure, and stable convergence under fully asynchronous operation. This system reduced experiment cycle time from weeks to hours, making large-scale RL experimentation operationally feasible. Technologies include PyTorch, PyTorch RPC, ZeroMQ, Redis, LSF, Slurm, and HPC."
     },
     {
         "id": "project-ai-native-link-adaptation",
@@ -233,15 +237,20 @@
             "policy distillation",
             "domain randomization",
             "Graph Neural Networks",
+            "GNN",
             "baseband",
             "sub-30 microseconds",
             "PyTorch",
             "Tier-1 operators",
             "spectral efficiency",
             "Bell Canada",
-            "AT&T"
+            "AT&T",
+            "OLLA",
+            "model compression",
+            "ONNX",
+            "production ML"
         ],
-        "content": "AI-Native Link Adaptation is a production AI system for real-time 5G link adaptation under sub-30 microsecond latency constraints. It replaces heuristic-based control with learned policies operating under real-time baseband constraints. Traditional link adaptation in radio access networks relies on heuristic control loops such as OLLA and coarse feedback signals, which struggle under rapidly changing channel conditions and heterogeneous traffic patterns. While reinforcement learning methods demonstrate strong performance in simulation, they rarely transfer to production due to stringent system constraints: sub-30 microsecond inference latency requirements, non-stationary and partially observable environments, tight integration with baseband hardware and protocol stacks, and strict reliability and stability guarantees in live networks. The system bridges RL research and production through a unified pipeline for training, compression, and deployment. RL policies are trained in high-fidelity simulation environments, then distilled into compact models optimized for deterministic low-latency inference, and deployed directly in the baseband pipeline. Design decisions include policy distillation, simulation-driven training, latency-constrained design, closed-loop integration, robustness to non-stationarity, and stability-aware optimization. Results include +20% throughput in live 5G networks, +10% spectral efficiency, less than 30 microsecond inference latency on baseband hardware, and deployment with Tier-1 operators. Technologies include PyTorch, Graph Neural Networks, Policy Distillation, Domain Randomization, and Distributed RL."
+        "content": "Burak Demirel built this project. AI-Native Link Adaptation is a production AI system for real-time 5G link adaptation under sub-30 microsecond latency constraints deployed with Tier-1 operators including Bell Canada and AT&T. It replaces heuristic-based control (OLLA) with learned policies operating under real-time baseband constraints. Traditional link adaptation in radio access networks relies on heuristic control loops and coarse feedback signals, which struggle under rapidly changing channel conditions and heterogeneous traffic patterns. While reinforcement learning methods demonstrate strong performance in simulation, they rarely transfer to production due to stringent system constraints: sub-30 microsecond inference latency requirements, non-stationary and partially observable environments, tight integration with baseband hardware and protocol stacks, and strict reliability and stability guarantees in live networks. The core challenge is not learning a better policy, but deploying it reliably in real-time network infrastructure. The system bridges RL research and production through a unified pipeline for training, compression, and deployment enabling continuous adaptation in live 5G networks. RL policies are trained in high-fidelity simulation environments capturing radio dynamics, then distilled into compact models optimized for deterministic low-latency inference, and deployed directly in the baseband pipeline enabling real-time decisions under sub-30\u03bcs constraints. Continuous validation in live networks ensures robustness under non-stationary conditions. Design decisions include policy distillation to compress high-capacity RL policies into models meeting strict latency budgets, simulation-driven training in system-level simulators, latency-constrained design prioritizing deterministic execution over model complexity, closed-loop integration embedding inference directly into the link adaptation control loop, robustness to non-stationarity handling distribution shifts, and stability-aware optimization using conservative updates. Results: +20% throughput in live 5G networks, +10% spectral efficiency, less than 30 microsecond inference latency on baseband hardware, and deployment with Tier-1 operators. Key lessons: deployment is the bottleneck where reliability under real-world constraints dominates performance; simulation-reality gap dominates; latency reshapes model design; stability matters more than peak performance; system integration defines success. Technologies include PyTorch, Graph Neural Networks, Policy Distillation, Domain Randomization, Distributed RL, and ONNX."
     },
     {
         "id": "project-agentic-recommendation",
@@ -260,9 +269,13 @@
             "semantic search",
             "sentence-transformers",
             "hallucination prevention",
-            "Python"
+            "Python",
+            "conversational AI",
+            "product discovery",
+            "multi-agent",
+            "structured validation"
         ],
-        "content": "Agentic Product Recommendation System is a conversational recommendation system combining multi-agent LLM pipelines with hybrid retrieval for e-commerce product discovery. It addresses the problem that users cannot express qualitative intent such as taste, style, or pairing through traditional keyword or filter-based product search. The system combines structured SQL filtering with semantic vector search using ChromaDB and sentence-transformers, with schema-validated outputs and contradiction detection to prevent hallucination. The outcome is reliable conversational product discovery with zero hallucinated attributes. Technologies include Python, FastAPI, ChromaDB, Pydantic, and RAG."
+        "content": "Burak Demirel built this project. Agentic Product Recommendation System is a conversational recommendation system combining multi-agent LLM pipelines with hybrid retrieval for grounded e-commerce product discovery. It addresses the problem that users cannot express qualitative intent such as taste, style, or pairing through traditional keyword or filter-based product search. The system builds a multi-agent recommendation workflow combining structured SQL filtering with semantic vector search using ChromaDB and sentence-transformers. Schema-validated outputs via Pydantic and contradiction detection prevent hallucination, ensuring zero hallucinated product attributes. The constraint is grounded product attributes \u2014 every recommendation must be traceable to verified data. The system architecture uses RAG with structured validation to achieve reliable conversational recommendations with verified attributes. The outcome is reliable conversational product discovery with zero hallucinated attributes. Technologies include Python, FastAPI, ChromaDB, Pydantic, and RAG."
     },
     {
         "id": "pub-journal-generalization-rl-ran",
@@ -283,7 +296,7 @@
             "IEEE Transactions on Machine Learning in Communications and Networking",
             "2026"
         ],
-        "content": "Generalization in Reinforcement Learning for Radio Access Networks. Authors: B. Demirel, Y. A. Wang, C. Tatino, and P. Soldati. Published in IEEE Transactions on Machine Learning in Communications and Networking, volume 4, pages 351-372, 2026. Abstract: Modern radio access networks (RANs) operate in highly dynamic and heterogeneous environments, where hand-tuned, rule-based radio resource management (RRM) algorithms frequently underperform. While reinforcement learning (RL) can surpass these heuristics in constrained scenarios, the unpredictable nature of radio channels and the diversity of cell deployments introduce substantial generalization challenges. Data-driven policies often overfit to their training distributions, leading to degraded performance when applied to unseen conditions. To address this, we propose a generalization-focused RL framework for RAN control that: (i) robustly reconstructs dynamically varying states from partial and noisy observations, while encoding static and semi-static information—such as radio nodes, cell attributes, and their topology—through graph representations; (ii) applies extensive domain randomization to broaden the training distribution; and (iii) distributes data generation across multiple actors while centralizing training in a cloud-compatible architecture aligned with O-RAN principles. Although training generalizable policies increases computational and data-management complexity, our distributed design mitigates these costs by scaling data collection and training across heterogeneous network conditions. Applied to downlink link adaptation (LA) across five 5th Generation (5G) benchmarks, the resulting generalized RL policy achieves approximately 10% higher average cell throughput and spectral efficiency than the state-of-the-art LA baseline in full-buffer multiple input multiple output (MIMO) and massive MIMO (mMIMO) scenarios, and approximately 20% under high-mobility conditions. Furthermore, it matches the performance of specialized RL policies in full-buffer traffic while delivering up to 4x and 2x throughput gains in enhanced mobile broadband (eMBB) and mixed-traffic benchmarks, respectively. In larger deployments with nine cells, generalized policies maintain robust performance, whereas specialized policies—trained on smaller configurations—suffer significant degradation, underscoring the scalability and robustness of the proposed approach."
+        "content": "Generalization in Reinforcement Learning for Radio Access Networks. Authors: B. Demirel, Y. A. Wang, C. Tatino, and P. Soldati. Published in IEEE Transactions on Machine Learning in Communications and Networking, volume 4, pages 351-372, 2026. Abstract: Modern radio access networks (RANs) operate in highly dynamic and heterogeneous environments, where hand-tuned, rule-based radio resource management (RRM) algorithms frequently underperform. While reinforcement learning (RL) can surpass these heuristics in constrained scenarios, the unpredictable nature of radio channels and the diversity of cell deployments introduce substantial generalization challenges. Data-driven policies often overfit to their training distributions, leading to degraded performance when applied to unseen conditions. To address this, we propose a generalization-focused RL framework for RAN control that: (i) robustly reconstructs dynamically varying states from partial and noisy observations, while encoding static and semi-static information\u2014such as radio nodes, cell attributes, and their topology\u2014through graph representations; (ii) applies extensive domain randomization to broaden the training distribution; and (iii) distributes data generation across multiple actors while centralizing training in a cloud-compatible architecture aligned with O-RAN principles. Although training generalizable policies increases computational and data-management complexity, our distributed design mitigates these costs by scaling data collection and training across heterogeneous network conditions. Applied to downlink link adaptation (LA) across five 5th Generation (5G) benchmarks, the resulting generalized RL policy achieves approximately 10% higher average cell throughput and spectral efficiency than the state-of-the-art LA baseline in full-buffer multiple input multiple output (MIMO) and massive MIMO (mMIMO) scenarios, and approximately 20% under high-mobility conditions. Furthermore, it matches the performance of specialized RL policies in full-buffer traffic while delivering up to 4x and 2x throughput gains in enhanced mobile broadband (eMBB) and mixed-traffic benchmarks, respectively. In larger deployments with nine cells, generalized policies maintain robust performance, whereas specialized policies\u2014trained on smaller configurations\u2014suffer significant degradation, underscoring the scalability and robustness of the proposed approach."
     },
     {
         "id": "pub-journal-design-principles-ran",
@@ -436,7 +449,7 @@
             "IEEE Transactions on Automatic Control",
             "2010"
         ],
-        "content": "Parameter Space Design of Repetitive Controllers for Satisfying a Robust Performance Requirement. Authors: B. Demirel and L. Guvenç. Published in IEEE Transactions on Automatic Control, volume 55, pages 1893-1899, 2010. Abstract: A parameter space procedure for designing chosen parameters of a repetitive controller to satisfy a robust performance criterion is presented. Using this method, low-order robust repetitive controllers can be designed and implemented for plants that possibly include time delay, poles on the imaginary axis and discontinuous weights. A design and simulation study based on a high speed atomic force microscope position control example is utilized to illustrate the method presented in this paper."
+        "content": "Parameter Space Design of Repetitive Controllers for Satisfying a Robust Performance Requirement. Authors: B. Demirel and L. Guven\u00e7. Published in IEEE Transactions on Automatic Control, volume 55, pages 1893-1899, 2010. Abstract: A parameter space procedure for designing chosen parameters of a repetitive controller to satisfy a robust performance criterion is presented. Using this method, low-order robust repetitive controllers can be designed and implemented for plants that possibly include time delay, poles on the imaginary axis and discontinuous weights. A design and simulation study based on a high speed atomic force microscope position control example is utilized to illustrate the method presented in this paper."
     },
     {
         "id": "pub-preprint-agentic-intent-management",
@@ -520,7 +533,7 @@
             "Istanbul",
             "2025"
         ],
-        "content": "Practical Policy Distillation for Reinforcement Learning in Radio Access Networks. Authors: S. Khosravi, B. Demirel, L. Zhou, J. Rasines and P. Soldati. Published at IEEE PIMRC, Istanbul, Turkiye, 2025. Abstract: Adopting artificial intelligence (AI) in radio access networks (RANs) presents several challenges, limited availability of link-level measurements (e.g., CQI reports), stringent real-time processing constraints (e.g., sub-1ms per TTI), and network heterogeneity (different spectrum bands, cell types, and vendor equipment). A critical yet often overlooked barrier lies in the computational and memory limitations of RAN baseband hardware—particularly in legacy 4th Generation (4G) systems—which typically lack on-chip neural accelerators. As a result, only lightweight AI models (under 1Mb and sub-100us inference time) can be effectively deployed, limiting both their performance and applicability. However, achieving strong generalization across diverse network conditions often requires large-scale models with substantial resource demands. To address this trade-off, this paper investigates policy distillation in the context of a reinforcement learning-based link adaptation task. We explore two strategies: single-policy distillation, where a scenario-agnostic teacher model is compressed into one generalized student model; and multi-policy distillation, where multiple scenario-specific teachers are consolidated into a single generalist student. Experimental evaluations in a high-fidelity, 5th Generation (5G)-compliant simulator demonstrate that both strategies produce compact student models that preserve the teachers' generalization capabilities while complying with the computational and memory limitations of existing RAN hardware."
+        "content": "Practical Policy Distillation for Reinforcement Learning in Radio Access Networks. Authors: S. Khosravi, B. Demirel, L. Zhou, J. Rasines and P. Soldati. Published at IEEE PIMRC, Istanbul, Turkiye, 2025. Abstract: Adopting artificial intelligence (AI) in radio access networks (RANs) presents several challenges, limited availability of link-level measurements (e.g., CQI reports), stringent real-time processing constraints (e.g., sub-1ms per TTI), and network heterogeneity (different spectrum bands, cell types, and vendor equipment). A critical yet often overlooked barrier lies in the computational and memory limitations of RAN baseband hardware\u2014particularly in legacy 4th Generation (4G) systems\u2014which typically lack on-chip neural accelerators. As a result, only lightweight AI models (under 1Mb and sub-100us inference time) can be effectively deployed, limiting both their performance and applicability. However, achieving strong generalization across diverse network conditions often requires large-scale models with substantial resource demands. To address this trade-off, this paper investigates policy distillation in the context of a reinforcement learning-based link adaptation task. We explore two strategies: single-policy distillation, where a scenario-agnostic teacher model is compressed into one generalized student model; and multi-policy distillation, where multiple scenario-specific teachers are consolidated into a single generalist student. Experimental evaluations in a high-fidelity, 5th Generation (5G)-compliant simulator demonstrate that both strategies produce compact student models that preserve the teachers' generalization capabilities while complying with the computational and memory limitations of existing RAN hardware."
     },
     {
         "id": "pub-conf-mcts-scheduling",
@@ -723,7 +736,7 @@
             "Istanbul",
             "2010"
         ],
-        "content": "Control of Mechatronics Systems: COMES Toolbox. Authors: B. Demirel and L. Guvenç. Published at ASME ESDA, Istanbul, Turkey, 2010. Abstract: An interactive software tool based on MATLAB to analyze and design controllers for mechatronic systems is presented in this paper. This toolbox called COMES is a graphical user interface (GUI) to routines for four different control approaches: classical control (lead, lag, PID etc.), preview control, model regulator control and repetitive control. These control approaches have all found widespread use in the practical implementation of controllers for mechatronic systems. The aim is to design a user-friendly toolbox with a well designed graphical user interface (GUI), which hides all calculations from the user as much as possible. Thus, the user can focus on the design and analysis phases through the graphical displays rather than being burdened by the complicated calculations that are involved. The effectiveness of the use of this MATLAB-based toolbox was demonstrated by carrying out some design and simulation studies for several position control applications available in the literature."
+        "content": "Control of Mechatronics Systems: COMES Toolbox. Authors: B. Demirel and L. Guven\u00e7. Published at ASME ESDA, Istanbul, Turkey, 2010. Abstract: An interactive software tool based on MATLAB to analyze and design controllers for mechatronic systems is presented in this paper. This toolbox called COMES is a graphical user interface (GUI) to routines for four different control approaches: classical control (lead, lag, PID etc.), preview control, model regulator control and repetitive control. These control approaches have all found widespread use in the practical implementation of controllers for mechatronic systems. The aim is to design a user-friendly toolbox with a well designed graphical user interface (GUI), which hides all calculations from the user as much as possible. Thus, the user can focus on the design and analysis phases through the graphical displays rather than being burdened by the complicated calculations that are involved. The effectiveness of the use of this MATLAB-based toolbox was demonstrated by carrying out some design and simulation studies for several position control applications available in the literature."
     },
     {
         "id": "pub-conf-afm-repetitive-control",
@@ -740,7 +753,7 @@
             "Istanbul",
             "2010"
         ],
-        "content": "Fast AFM Scanning with Parameter Space Based Robust Repetitive Control Designed Using COMES Toolbox. Authors: S. Necipoglu, B. Demirel and L. Guvenç. Published at ASME ESDA, Istanbul, Turkey, 2010. Abstract: Atomic Force Microscope (AFM) is a very strong and beneficial instrument for acquiring images at nanometer scale. Hence, obtaining better image quality and scan speed is a research area of great interest. Improving the dynamic responses of the scanning probe and the vertical motion of the scanner mechanisms are the two major areas of concentration in this sense. Improving the vertical dynamics is achieved either by designing more complex scanner mechanisms with higher bandwidth or designing more sophisticated controllers rather than the PI, PID or PIID types of controllers that are mostly used in practice. In this paper, the authors focus on designing a repetitive control scheme for fast and accurate scanning. It is possible to implement repetitive control to achieve this goal when it is considered that the successive lines of the scan are quite similar due to the very small steps taken to advance on the sample. Repetitive control can reject higher frequency disturbances due to the surface topography in AFM much better than a conventional controller can, as it can drive the error caused by any periodic input signal to zero. Besides increasing the scan speed, it is also important that the phase lag can be compensated perfectly using repetitive control, with the knowledge of the surface topography from the previous period by introducing appropriate phase advance."
+        "content": "Fast AFM Scanning with Parameter Space Based Robust Repetitive Control Designed Using COMES Toolbox. Authors: S. Necipoglu, B. Demirel and L. Guven\u00e7. Published at ASME ESDA, Istanbul, Turkey, 2010. Abstract: Atomic Force Microscope (AFM) is a very strong and beneficial instrument for acquiring images at nanometer scale. Hence, obtaining better image quality and scan speed is a research area of great interest. Improving the dynamic responses of the scanning probe and the vertical motion of the scanner mechanisms are the two major areas of concentration in this sense. Improving the vertical dynamics is achieved either by designing more complex scanner mechanisms with higher bandwidth or designing more sophisticated controllers rather than the PI, PID or PIID types of controllers that are mostly used in practice. In this paper, the authors focus on designing a repetitive control scheme for fast and accurate scanning. It is possible to implement repetitive control to achieve this goal when it is considered that the successive lines of the scan are quite similar due to the very small steps taken to advance on the sample. Repetitive control can reject higher frequency disturbances due to the surface topography in AFM much better than a conventional controller can, as it can drive the error caused by any periodic input signal to zero. Besides increasing the scan speed, it is also important that the phase lag can be compensated perfectly using repetitive control, with the knowledge of the surface topography from the previous period by introducing appropriate phase advance."
     },
     {
         "id": "pub-conf-compliant-impact-generator",
@@ -776,7 +789,7 @@
             "parameter space",
             "2017"
         ],
-        "content": "Control of Mechatronic Systems. Authors: L. Guvenç, B. A. Guvenç, B. Demirel and M. T. Emirler. Published by IET Books, 2017, 216 pages, ISBN 978-1-78561-144-5. This book introduces researchers and advanced students with a basic control systems background to an array of control techniques which they can easily implement and use to meet the required performance specifications for their mechatronic applications. It is the result of close to two decades of work of the authors on modeling, simulating and controlling different mechatronic systems from the motion control, automotive control and micro and nano-mechanical systems control areas. The methods presented in the book have all been tested by the authors and a very large group of researchers, who have produced practically implementable controllers with highly successful results. The approach that is recommended in this book is to first start with a conventional control method which may then be cascaded with a feedforward controller if the input is known or can be measured with a preview; to add a disturbance observer if unknown disturbances are to be rejected and if regulation of the uncertain plant about a nominal model is desired; and to add a repetitive controller to take care of any periodic inputs of fixed and known period. Case studies ranging from road vehicle yaw stability control and automated path following, to decoupling control of piezotube actuators in an atomic force microscope are presented. Parameter space based methods are used in the book for achieving robust controllers."
+        "content": "Control of Mechatronic Systems. Authors: L. Guven\u00e7, B. A. Guven\u00e7, B. Demirel and M. T. Emirler. Published by IET Books, 2017, 216 pages, ISBN 978-1-78561-144-5. This book introduces researchers and advanced students with a basic control systems background to an array of control techniques which they can easily implement and use to meet the required performance specifications for their mechatronic applications. It is the result of close to two decades of work of the authors on modeling, simulating and controlling different mechatronic systems from the motion control, automotive control and micro and nano-mechanical systems control areas. The methods presented in the book have all been tested by the authors and a very large group of researchers, who have produced practically implementable controllers with highly successful results. The approach that is recommended in this book is to first start with a conventional control method which may then be cascaded with a feedforward controller if the input is known or can be measured with a preview; to add a disturbance observer if unknown disturbances are to be rejected and if regulation of the uncertain plant about a nominal model is desired; and to add a repetitive controller to take care of any periodic inputs of fixed and known period. Case studies ranging from road vehicle yaw stability control and automated path following, to decoupling control of piezotube actuators in an atomic force microscope are presented. Parameter space based methods are used in the book for achieving robust controllers."
     },
     {
         "id": "pub-patent-joint-training-ai",
@@ -1010,7 +1023,7 @@
     {
         "id": "writing-ai-extreme-latency",
         "title": "When AI Has No Time to Think: Deploying Models Under Extreme Latency",
-        "section": "Writing",
+        "section": "Blog",
         "url": "/blog/ai-extreme-latency",
         "tags": [
             "latency",
@@ -1030,7 +1043,7 @@
     {
         "id": "writing-graph-state-machines-pydantic",
         "title": "State Machines for Structured Computation with Pydantic Graph",
-        "section": "Writing",
+        "section": "Blog",
         "url": "/blog/graph-state-machines-pydantic",
         "tags": [
             "Pydantic Graph",
@@ -1050,7 +1063,7 @@
     {
         "id": "writing-agentic-ai-networks",
         "title": "From Intents to Actions: How Agentic AI Transforms Network Operations",
-        "section": "Writing",
+        "section": "Blog",
         "url": "/blog/agentic-ai-networks",
         "tags": [
             "agentic AI",
