@@ -322,7 +322,7 @@ SYSTEM_PROMPT = (
 )
 
 
-def create_agent() -> Agent[None, AskResponse]:
+def create_agent() -> Agent:
     """Create a Pydantic AI Agent configured with OpenRouter and OpenAI gpt-4o-mini."""
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
@@ -341,9 +341,7 @@ def create_agent() -> Agent[None, AskResponse]:
 
     return Agent(
         model,
-        system_prompt=SYSTEM_PROMPT,
-        output_type=AskResponse,  # type: ignore[arg-type]
-        output_retries=4,
+        system_prompt=SYSTEM_PROMPT
     )
 
 
