@@ -69,7 +69,7 @@ export function Hero() {
               className="mt-8 flex gap-4"
             >
               <Button href="/projects">
-                {copy.hero.cta.primary} <span className="ml-1">→</span>
+                {copy.hero.cta.primary}
               </Button>
               <Button href="/research" variant="secondary">
                 {copy.hero.cta.secondary}

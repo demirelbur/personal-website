@@ -16,6 +16,33 @@ interface Message {
   sources?: Source[];
 }
 
+function cleanAnswerText(text: string): string {
+  let cleaned = text;
+
+  // Remove labeled source sections and everything after them
+  cleaned = cleaned.replace(
+    /\n?\s*(Relevant source URLs?|Source URLs?|Sources?|References?)\s*:[\s\S]*$/gi,
+    ""
+  );
+
+  // Remove markdown links: [Title](https://...)
+  cleaned = cleaned.replace(/\[.*?\]\(https?:\/\/[^\)]+\)/g, "");
+
+  // Remove raw URLs (with optional leading bullet/dash)
+  cleaned = cleaned.replace(/\s*[-*·]?\s*https?:\/\/[^\s)]+/g, "");
+
+  // Clean up leftover bullet prefixes on now-empty lines
+  cleaned = cleaned.replace(/\n\s*[-*·]\s*$/gm, "");
+
+  // Clean up multiple consecutive newlines
+  cleaned = cleaned.replace(/\n{3,}/g, "\n\n");
+
+  // Remove trailing punctuation artifacts like ".- " left at end
+  cleaned = cleaned.replace(/\.\s*-\s*$/, ".");
+
+  return cleaned.trim();
+}
+
 const SUGGESTED_QUESTIONS = [
   "What kind of reinforcement learning work has Burak done?",
   "What is Burak's research about?",
@@ -119,7 +146,7 @@ export function AskAIPanel({
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: data.answer,
+          content: cleanAnswerText(data.answer),
           sources: data.sources,
         };
 
@@ -271,9 +298,15 @@ export function AskAIPanel({
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="text-sm text-text-secondary leading-relaxed whitespace-pre-wrap">
-                    {msg.content}
-                  </div>
+                  {msg.content ? (
+                    <div className="text-sm text-text-secondary leading-relaxed whitespace-pre-wrap">
+                      {msg.content}
+                    </div>
+                  ) : (
+                    <div className="text-sm text-text-muted italic">
+                      I could not find relevant information on the website.
+                    </div>
+                  )}
                   {msg.sources && msg.sources.length > 0 && (
                     <div>
                       <p className="text-[10px] font-medium text-text-muted uppercase tracking-widest mb-2">

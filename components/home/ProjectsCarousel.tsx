@@ -278,7 +278,7 @@ export function ProjectsCarousel() {
           <div
             key={project.slug}
             data-card
-            className="w-[560px] lg:w-[620px] shrink-0 snap-start"
+            className="w-[640px] lg:w-[720px] shrink-0 snap-start"
           >
             <CarouselCard project={project} />
           </div>

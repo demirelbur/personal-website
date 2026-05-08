@@ -4,11 +4,16 @@ Uses Pydantic AI Agent with OpenRouter to answer questions from website content.
 """
 
 import json
+import logging
 import math
 import os
 import re
+import time
 from pathlib import Path
 from typing import Optional
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("ask-ai")
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -196,7 +201,8 @@ SYSTEM_PROMPT = (
     "Do not invent information. "
     'If the answer is not present in the context, say: "I could not find this information on the website." '
     "Keep the answer concise and professional. "
-    "At the end of your answer, list relevant source URLs from the context."
+    "Do not include citations, source URLs, markdown links, reference lists, or bibliography entries in your answer. "
+    "Source links are displayed separately by the UI."
 )
 
 
@@ -240,8 +246,12 @@ async def ask(request: AskRequest) -> AskResponse:
     if not question:
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
+    start = time.time()
+    logger.info("Question received: %s", question[:100])
+
     # Try semantic search first, fall back to lexical
     results = await semantic_search(question, RECORDS, top_k=5)
+    search_method = "semantic" if results is not None else "lexical"
     if results is None:
         results = lexical_search(question, RECORDS, top_k=5)
 
@@ -250,10 +260,14 @@ async def ask(request: AskRequest) -> AskResponse:
     try:
         answer = await ask_agent(question, context)
     except RuntimeError as e:
+        logger.error("Agent runtime error: %s", str(e))
         raise HTTPException(status_code=500, detail=str(e))
-    except Exception:
+    except Exception as e:
+        logger.error("Agent failed: %s", str(e))
         raise HTTPException(status_code=502, detail="AI service unavailable")
 
     sources = [Source(title=r.title, section=r.section, url=r.url) for r in results[:3]]
+    elapsed = time.time() - start
+    logger.info("Answered in %.2fs [%s] sources=%d", elapsed, search_method, len(sources))
 
     return AskResponse(answer=answer, sources=sources)

@@ -10,7 +10,7 @@ interface CodeBlockProps {
 
 export function CodeBlock({ filename, lines }: CodeBlockProps) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-border bg-bg-secondary p-5 font-[family-name:var(--font-mono)] text-sm leading-relaxed shadow-[var(--shadow-md)]">
+    <div className="rounded-[var(--radius-md)] border border-border bg-bg-secondary p-5 font-[family-name:var(--font-jetbrains)] text-sm leading-relaxed shadow-[var(--shadow-md)]">
       {filename && (
         <div className="mb-4 text-xs text-text-muted">{filename}</div>
       )}

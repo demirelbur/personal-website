@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
-import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
-  pageExtensions: ["ts", "tsx", "md", "mdx"],
   async rewrites() {
     if (process.env.NODE_ENV !== "development") return [];
     return [
@@ -14,6 +12,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-const withMDX = createMDX({});
-
-export default withMDX(nextConfig);
+export default nextConfig;

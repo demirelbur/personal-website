@@ -96,11 +96,7 @@ export const copy = {
     },
   },
   ui: {
-    caseStudy: "Case study →",
     current: "Current",
     copyright: "All rights reserved.",
-    featuredProject: "Featured Project",
-    readCaseStudy: "Read case study →",
-    journey: "Journey",
   },
 };
