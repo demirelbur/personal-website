@@ -13,7 +13,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     platform: "scholar",
-    url: "https://scholar.google.com/citations?user=Bng9E5UAAAAJ",
+    url: "https://scholar.google.com/citations?user=m842xaIAAAAJ&hl=en",
     label: "Google Scholar",
   },
   {

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/layout/Section";
 import { PostBody } from "@/components/ui/PostBody";
-import { posts } from "@/content/writing";
+import { posts } from "@/content/blog";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 

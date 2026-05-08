@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
 import { PostBody } from "@/components/ui/PostBody";
-import { ArchitectureDiagram } from "@/components/ui/ArchitectureDiagram";
+import { DistributedRLCaseStudy } from "@/components/projects/DistributedRLCaseStudy";
+import { LinkAdaptationCaseStudy } from "@/components/projects/LinkAdaptationCaseStudy";
 import { projects } from "@/content/projects";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
@@ -33,43 +34,39 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <div className="pt-[72px]">
       <Section>
-        <article className="max-w-2xl">
-          <Link
-            href="/projects"
-            className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors duration-[var(--duration-fast)] mb-8"
-          >
-            {copy.nav.backToProjects}
-          </Link>
+        <Link
+          href="/projects"
+          className="inline-flex items-center text-sm font-medium text-accent hover:text-accent-hover transition-colors duration-[var(--duration-fast)] mb-8"
+        >
+          {copy.nav.backToProjects}
+        </Link>
 
-          <h1 className="text-[36px] md:text-[40px] md:leading-[48px] font-bold tracking-tight">
-            {project.title}
-          </h1>
-          <p className="mt-4 text-lg text-text-secondary leading-relaxed">
-            {project.description}
-          </p>
+        {/* Dedicated case studies */}
+        {project.slug === "distributed-rl-training" ? (
+          <DistributedRLCaseStudy project={project} />
+        ) : project.slug === "ai-native-link-adaptation" ? (
+          <LinkAdaptationCaseStudy project={project} />
+        ) : project.body ? (
+          <article className="max-w-2xl">
+            <h1 className="text-[36px] md:text-[40px] md:leading-[48px] font-bold tracking-tight">
+              {project.title}
+            </h1>
+            <p className="mt-4 text-lg text-text-secondary leading-relaxed">
+              {project.description}
+            </p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <Badge key={t} label={t} />
-            ))}
-          </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <Badge key={t} label={t} />
+              ))}
+            </div>
 
-          {project.body ? (
             <div className="mt-12">
-              {project.slug === "distributed-rl-training" ? (
-                <>
-                  <PostBody content={project.body.split("## System Architecture")[0]} />
-                  <h2 className="text-xl font-semibold text-text-primary mt-10 mb-4">System Architecture</h2>
-                  <ArchitectureDiagram />
-                  <PostBody content={project.body.split("## System Architecture")[1]} />
-                </>
-              ) : (
-                <PostBody content={project.body} />
-              )}
+              <PostBody content={project.body} />
               {project.links && project.links.length > 0 && (
                 <div className="mt-10">
                   <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
-                    {copy.pages.projectDetail.labels.links}
+                    {labels.links}
                   </h2>
                   <ul className="space-y-2">
                     {project.links.map((link) => (
@@ -88,7 +85,22 @@ export default async function ProjectPage({ params }: Props) {
                 </div>
               )}
             </div>
-          ) : (
+          </article>
+        ) : (
+          <article className="max-w-2xl">
+            <h1 className="text-[36px] md:text-[40px] md:leading-[48px] font-bold tracking-tight">
+              {project.title}
+            </h1>
+            <p className="mt-4 text-lg text-text-secondary leading-relaxed">
+              {project.description}
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <Badge key={t} label={t} />
+              ))}
+            </div>
+
             <div className="mt-12 space-y-8">
               <div>
                 <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
@@ -108,7 +120,6 @@ export default async function ProjectPage({ params }: Props) {
                 </p>
               </div>
 
-
               <div>
                 <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-3">
                   {labels.impact}
@@ -121,7 +132,7 @@ export default async function ProjectPage({ params }: Props) {
               {project.links && project.links.length > 0 && (
                 <div>
                   <h2 className="text-xs font-medium text-text-muted uppercase tracking-widest mb-4">
-                    {copy.pages.projectDetail.labels.links}
+                    {labels.links}
                   </h2>
                   <ul className="space-y-2">
                     {project.links.map((link) => (
@@ -140,8 +151,8 @@ export default async function ProjectPage({ params }: Props) {
                 </div>
               )}
             </div>
-          )}
-        </article>
+          </article>
+        )}
       </Section>
     </div>
   );

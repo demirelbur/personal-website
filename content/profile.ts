@@ -6,9 +6,9 @@ export const profile = {
   headlineAccent: "research to real-world deployment.",
   summary:
     "I build production-grade AI systems that operate under real-world constraints — with a focus on latency, reliability, scalability, and deployment.",
-  summarySecondary:
-    "Across (multi-objective) reinforcement learning, agentic AI, and LLM-based systems.",
-  signalLine: "Distributed RL · Agentic AI · LLM systems · sub-100μs deployment constraints",
+  // summarySecondary:
+  //   "Across (multi-objective) reinforcement learning, agentic AI, and LLM-based systems.",
+  signalLine: "Distributed RL · Agentic AI · LLM-powered systems",
   bio: `I build AI systems for environments where models do not get unlimited time, data, or compute.
 
 My work sits at the intersection of reinforcement learning, agentic AI, control, and distributed systems — with a focus on turning research ideas into reliable production systems for real-world networks.
@@ -48,6 +48,6 @@ My favorite problems are the ones where machine learning, systems engineering, a
   stats: {
     papers: "25+",
     patents: "15+",
-    citations: "500+",
+    citations: "700+",
   },
 };

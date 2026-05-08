@@ -8,7 +8,7 @@ import { copy } from "@/content/copy";
 export const metadata = {
   title: "Research & Publications",
   description:
-    "25+ peer-reviewed papers and 15+ patents in reinforcement learning, control systems, RAN optimization, and production ML. 500+ citations.",
+    "25+ peer-reviewed papers and 15+ patents in reinforcement learning, control systems, RAN optimization, and production ML. 700+ citations.",
 };
 
 export default function ResearchPage() {

@@ -48,12 +48,12 @@ export const copy = {
   pages: {
     projects: {
       title: "Projects",
-      subtitle: "ML systems and platforms I've architected, built, and deployed.",
+      subtitle: "Research-to-production AI systems, shown as projects.",
     },
     research: {
       title: "Research & Publications",
       subtitle:
-        "25+ peer-reviewed papers in machine learning, control, and optimization. 500+ citations.",
+        "25+ peer-reviewed papers in machine learning, control, and optimization. 700+ citations.",
       categories: {
         book: "Book",
         preprints: "Preprints",

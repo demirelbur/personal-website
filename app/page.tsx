@@ -1,7 +1,7 @@
 import { Hero } from "@/components/home/Hero";
 import { ProjectsCarousel } from "@/components/home/ProjectsCarousel";
 import { ResearchPreview } from "@/components/home/ResearchPreview";
-import { WritingPreview } from "@/components/home/WritingPreview";
+import { BlogPreview } from "@/components/home/BlogPreview";
 import { AboutPreview } from "@/components/home/AboutPreview";
 import { ContactCTA } from "@/components/home/ContactCTA";
 
@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
       <ProjectsCarousel />
       <ResearchPreview />
-      <WritingPreview />
+      <BlogPreview />
       <AboutPreview />
       <ContactCTA />
     </>

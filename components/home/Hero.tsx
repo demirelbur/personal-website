@@ -46,11 +46,6 @@ export function Hero() {
               <p className="text-base text-text-secondary leading-relaxed">
                 {profile.summary}
               </p>
-              {profile.summarySecondary && (
-                <p className="mt-3 text-base text-text-secondary leading-relaxed">
-                  {profile.summarySecondary}
-                </p>
-              )}
             </motion.div>
 
             {profile.signalLine && (

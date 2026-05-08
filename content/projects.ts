@@ -41,22 +41,85 @@ export const projects: Project[] = [
     slug: "agentic-ai-networks",
     category: "PROJECT / AGENTIC AI",
     description:
-      "Agentic AI system for autonomous 5G network operations enabling real-time closed-loop decision-making.",
+      "Intent-driven agentic AI system that translates high-level network intents into optimization templates, preferences, and closed-loop control actions.",
     problem:
-      "Network operations required manual intervention for optimization decisions, introducing latency and inconsistency in dynamic 5G environments.",
+      "Modern telecom networks must support heterogeneous services with different and sometimes conflicting intents. Existing heuristic approaches struggle to translate high-level intents into concrete low-level control actions.",
     solution:
-      "Designed and industrialized an agentic system integrating reinforcement learning, Bayesian optimization, and LLM-based reasoning for autonomous closed-loop control.",
-    outcome: "Enabled real-time autonomous decision-making in production 5G networks",
-    takeaway: "Closed-loop autonomous decision-making in production 5G networks",
+      "Designed an agentic AI system with three specialized agents: an LLM-based intent interpreter, an optimization-driven preference derivation agent, and a preference-conditioned multi-objective RL controller.",
+    outcome: "Intent-to-action automation with Pareto-aware control",
+    takeaway: "Intent-to-action automation with Pareto-aware control",
     summaryMetrics: [
-      { label: "IMPACT", value: "real-time closed-loop" },
-      { label: "STACK", value: "LLMs + RL" },
-      { label: "OUTCOME", value: "production 5G ops" },
+      { label: "CONSTRAINT", value: "conflicting intents" },
+      { label: "SYSTEM", value: "interpreter + optimizer + MORL" },
+      { label: "IMPACT", value: "Pareto-aware control" },
     ],
-    tech: ["Python", "LLMs", "Bayesian Optimization", "RL", "FastAPI"],
+    tech: ["LLMs", "Agentic AI", "Intent-Based Networking", "Multi-Objective RL", "Optimization"],
     year: 2024,
     featured: true,
-    mobileHighlight: "real-time closed-loop · production 5G ops",
+    mobileHighlight: "intent-to-action · Pareto-aware control",
+    links: [
+      {
+        label: "From Intents to Actions: Agentic AI in Autonomous Networks (arXiv, 2026)",
+        url: "https://arxiv.org/abs/2602.01271",
+      },
+    ],
+    body: `## The Problem
+
+Modern telecom networks must support heterogeneous services with different and sometimes conflicting intents: ultra-low latency, high throughput, energy efficiency, reliability, and service-specific constraints. Existing heuristic approaches struggle to translate these high-level intents into concrete low-level control actions.
+
+## The Approach
+
+The project proposes an agentic AI system organized around three specialized agents. Each agent handles a different part of the intent-to-action workflow: interpreting service intents, deriving optimization preferences, and executing preference-driven control.
+
+### Supervisory Interpreter Agent
+
+Uses language models to parse high-level intents into executable optimization templates and refine them based on feedback, feasibility, and changing network conditions.
+
+### Optimizer Agent
+
+Transforms templates into tractable optimization problems, analyzes trade-offs, and derives preferences across competing objectives.
+
+### Preference-Driven Controller Agent
+
+Uses multi-objective reinforcement learning to apply those preferences and operate near the Pareto frontier of network performance.
+
+## Intent-to-Action Workflow
+
+1. **Intent** — A service or operator expresses a high-level goal such as latency, throughput, reliability, or energy efficiency.
+
+2. **Interpretation** — The supervisory interpreter converts the intent into an executable optimization template.
+
+3. **Preference derivation** — The optimizer analyzes constraints and trade-offs, then derives preferences across objectives.
+
+4. **Control** — The multi-objective RL controller selects actions that best satisfy the intent under current network conditions.
+
+5. **Feedback** — Observed network behavior is used to refine interpretation, feasibility, and future control decisions.
+
+## Architecture
+
+The architecture separates reasoning, optimization, and control into specialized agents:
+
+- The interpreter agent handles semantic understanding and refinement of high-level intents.
+- The optimizer agent converts those intents into formal optimization structures and preferences.
+- The controller agent uses preference-conditioned multi-objective reinforcement learning to choose actions near the Pareto frontier.
+
+This separation makes the system easier to reason about, evaluate, and extend than a single monolithic agent.
+
+## What I Built
+
+- Designed the intent-to-action agentic AI workflow for autonomous network control.
+- Connected language-model intent interpretation with optimization-based preference derivation.
+- Integrated preference-conditioned multi-objective reinforcement learning as the control layer.
+- Defined the responsibilities and interfaces between interpreter, optimizer, and controller agents.
+- Framed feedback refinement as part of the autonomous network loop.
+
+## Why It Mattered
+
+Autonomous networks cannot rely only on static heuristics when service requirements are diverse, dynamic, and sometimes conflicting. This architecture shows how agentic AI can connect intent understanding, optimization, and control so networks can reason over objectives and adapt actions under changing conditions.
+
+## My Role
+
+I co-designed the intent-to-action architecture, including agent responsibilities, optimization flow, preference derivation, feedback refinement, and the connection between high-level intents and autonomous control policies.`,
   },
   {
     title: "High-Throughput Distributed RL Training System",

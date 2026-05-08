@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { posts } from "@/content/writing";
+import { posts } from "@/content/blog";
 import { copy } from "@/content/copy";
 import { staggeredFadeInUp } from "@/lib/motion";
 
-export function WritingPreview() {
+export function BlogPreview() {
   return (
     <Section id="writing">
       <SectionHeading

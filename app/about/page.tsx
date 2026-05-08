@@ -62,7 +62,7 @@ const workPrinciples = [
 const proofPoints = [
   { value: "25+", label: "Publications", icon: "book-open" },
   { value: "15+", label: "Patents", icon: "file-text" },
-  { value: "500+", label: "Citations", icon: "quote" },
+  { value: "700+", label: "Citations", icon: "quote" },
   { value: "100+", label: "Internal Users", icon: "users" },
 ];
 

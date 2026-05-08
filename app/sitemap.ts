@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
-import { posts } from "@/content/writing";
+import { posts } from "@/content/blog";
 
 const siteUrl = "https://burakdemirel.dev";
 

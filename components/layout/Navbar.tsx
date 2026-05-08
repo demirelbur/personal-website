@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { navItems } from "@/content/navigation";
 import { profile } from "@/content/profile";
 import { useTheme } from "@/lib/theme";
@@ -13,6 +14,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const askAI = useAskAI();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -42,16 +44,29 @@ export function Navbar() {
         </Link>
 
         <ul className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-[var(--duration-fast)]"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+            return (
+              <li key={item.href} className="relative">
+                <Link
+                  href={item.href}
+                  className={`text-sm transition-colors duration-[var(--duration-fast)] ${
+                    isActive
+                      ? "text-text-primary"
+                      : "text-text-secondary hover:text-text-primary"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+                {isActive && (
+                  <span className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-1 h-1 rounded-full bg-accent" />
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div className="hidden md:flex items-center gap-2">

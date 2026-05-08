@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { posts } from "@/content/writing";
+import { posts } from "@/content/blog";
 import { profile } from "@/content/profile";
 import { copy } from "@/content/copy";
 
