@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:api": "pytest tests/api -q"
+    "test:api": "uv run --group dev pytest tests/api -q"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
