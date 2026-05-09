@@ -5,6 +5,7 @@ export const metadata = {
   title: "Projects",
   description:
     "Research-to-production AI systems — distributed RL training, AI-native link adaptation, agentic AI for autonomous networks.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {

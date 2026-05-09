@@ -8,6 +8,7 @@ export const metadata = {
   title: "Research & Publications",
   description:
     "25+ peer-reviewed papers and 15+ patents in reinforcement learning, control systems, RAN optimization, and production ML. 700+ citations.",
+  alternates: { canonical: "/research" },
 };
 
 export default function ResearchPage() {

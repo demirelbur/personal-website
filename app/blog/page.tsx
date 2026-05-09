@@ -10,6 +10,7 @@ export const metadata = {
   title: "Blog",
   description:
     "Technical deep-dives on distributed RL, agentic AI, model compression, and production ML systems engineering.",
+  alternates: { canonical: "/blog" },
 };
 
 export default function WritingPage() {

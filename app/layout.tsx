@@ -109,7 +109,15 @@ export default function RootLayout({
       lang="en"
       data-theme="dark"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-bg-primary text-text-primary transition-colors duration-[var(--duration-slow)]">
         <script
           type="application/ld+json"

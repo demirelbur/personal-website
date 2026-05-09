@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 
 interface Source {
@@ -90,10 +90,15 @@ export function AskAIPanel({
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const loadingRef = useRef(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Portal must render only after client mount.
     setMounted(true);
+    return () => { abortRef.current?.abort(); };
   }, []);
 
   useEffect(() => {
@@ -103,12 +108,20 @@ export function AskAIPanel({
   }, [isOpen]);
 
   useEffect(() => {
+    if (!isOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) onClose();
+      if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -117,10 +130,14 @@ export function AskAIPanel({
   const submit = useCallback(
     async (q: string) => {
       const trimmed = q.trim();
-      if (!trimmed || loading) return;
+      if (!trimmed || loadingRef.current) return;
+
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
 
       const userMessage: Message = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         role: "user",
         content: trimmed,
       };
@@ -128,6 +145,7 @@ export function AskAIPanel({
       setMessages((prev) => [...prev, userMessage]);
       setQuestion("");
       setLoading(true);
+      loadingRef.current = true;
       setError(null);
 
       try {
@@ -135,6 +153,7 @@ export function AskAIPanel({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: trimmed }),
+          signal: controller.signal,
         });
 
         if (!resp.ok) {
@@ -144,7 +163,7 @@ export function AskAIPanel({
 
         const data = await resp.json();
         const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
+          id: crypto.randomUUID(),
           role: "assistant",
           content: cleanAnswerText(data.answer),
           sources: data.sources,
@@ -152,12 +171,17 @@ export function AskAIPanel({
 
         setMessages((prev) => [...prev, assistantMessage]);
       } catch (e) {
+        if (e instanceof DOMException && e.name === "AbortError") return;
         setError(e instanceof Error ? e.message : "Something went wrong");
       } finally {
-        setLoading(false);
+        if (abortRef.current === controller) {
+          loadingRef.current = false;
+          setLoading(false);
+          abortRef.current = null;
+        }
       }
     },
-    [loading]
+    []
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -178,6 +202,25 @@ export function AskAIPanel({
     setQuestion("");
   };
 
+  const handleTabTrap = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Tab") return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    const focusable = panel.querySelectorAll<HTMLElement>(
+      'button, [href], textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   if (!mounted) return null;
 
   const panel = (
@@ -193,12 +236,15 @@ export function AskAIPanel({
 
       {/* Panel */}
       <div
+        ref={panelRef}
+        onKeyDown={handleTabTrap}
         className={`fixed top-0 right-0 z-[999] h-full w-full md:w-[420px] bg-bg-primary border-l border-border shadow-lg flex flex-col transition-transform duration-300 ease-[var(--ease-out)] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
-        aria-modal="true"
+        aria-modal={isOpen || undefined}
         aria-label="Ask AI"
+        aria-hidden={!isOpen}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
@@ -265,7 +311,7 @@ export function AskAIPanel({
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-5 py-4">
+        <div className="flex-1 overflow-y-auto px-5 py-4" aria-live="polite" aria-atomic="false">
           {/* Suggested questions (only when no messages) */}
           {messages.length === 0 && !loading && !error && (
             <div className="mb-4">

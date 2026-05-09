@@ -9,6 +9,7 @@ export const metadata = {
   title: "Contact",
   description:
     "Get in touch for research collaborations, consulting, or engineering challenges in production RL, agentic AI, and ML infrastructure.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

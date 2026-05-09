@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/layout/Section";
@@ -17,11 +18,26 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
-  return { title: `${project.title} — ${profile.name}` };
+  return {
+    title: project.title,
+    description: project.description,
+    alternates: { canonical: `/projects/${slug}` },
+    openGraph: {
+      type: "article",
+      title: project.title,
+      description: project.description,
+      url: `/projects/${slug}`,
+    },
+    twitter: {
+      card: "summary",
+      title: project.title,
+      description: project.description,
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {

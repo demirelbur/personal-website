@@ -7,6 +7,7 @@ export const metadata = {
   title: "About",
   description:
     "ML Systems Engineer building production-grade AI for telecom networks. Background in reinforcement learning, distributed systems, and control.",
+  alternates: { canonical: "/about" },
 };
 
 const focusAreas = [

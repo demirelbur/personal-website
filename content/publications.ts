@@ -206,7 +206,7 @@ export const publications: Publication[] = [
     venue: "IEEE Transactions on Automatic Control",
     venueShort: "IEEE Trans. Autom. Control",
     year: 2014,
-    link: "#",
+    link: "https://doi.org/10.1109/TAC.2014.2351872",
     summary:
       "Modular co-design framework for jointly optimizing control and communication in wireless networked systems.",
     type: "journal",
@@ -254,7 +254,7 @@ export const publications: Publication[] = [
     venue: "ASME Journal of Mechanisms and Robotics",
     venueShort: "ASME J. Mech. Robot.",
     year: 2010,
-    link: "#",
+    link: "https://doi.org/10.1115/1.4000527",
     summary:
       "Design methodology for semi-compliant mechanisms achieving specified impact and contact force profiles.",
     type: "journal",
@@ -308,7 +308,7 @@ export const publications: Publication[] = [
       "AI-driven intent management enabling differentiated connectivity in self-driving networks.",
     type: "preprint",
     topics: ["Agentic AI", "Intent management", "Autonomous networks", "Differentiated connectivity"],
-    abstract: "#",
+    abstract: "",
   },
   {
     title:
@@ -420,7 +420,7 @@ export const publications: Publication[] = [
     venue: "European Control Conference",
     venueShort: "ECC",
     year: 2021,
-    link: "#",
+    link: "https://doi.org/10.23919/ECC54610.2021.9655084",
     summary:
       "MCTS-based approach for designing periodic communication schedules in networked control systems.",
     type: "conference",
@@ -448,7 +448,7 @@ export const publications: Publication[] = [
     venue: "IEEE Conference on Decision and Control",
     venueShort: "IEEE CDC",
     year: 2018,
-    link: "#",
+    link: "https://doi.org/10.1109/LCSYS.2018.2847721",
     summary:
       "Conference presentation of DeepCAS — deep RL for joint scheduling and control optimization.",
     type: "conference",
@@ -476,7 +476,7 @@ export const publications: Publication[] = [
     venue: "IEEE Conference on Decision and Control",
     venueShort: "IEEE CDC",
     year: 2017,
-    link: "#",
+    link: "https://doi.org/10.1109/CDC.2017.8263741",
     summary:
       "Sparsity-promoting iterative learning control for systems operating under communication resource constraints.",
     type: "conference",
@@ -503,7 +503,7 @@ export const publications: Publication[] = [
     authors: "B. Demirel, A. S. Leong and D. E. Quevedo",
     venue: "IFAC World Congress",
     year: 2017,
-    link: "#",
+    link: "https://doi.org/10.1016/j.ifacol.2017.08.1781",
     summary:
       "Performance analysis of probabilistic event-triggered control in the scalar case.",
     type: "conference",
@@ -530,7 +530,7 @@ export const publications: Publication[] = [
     authors: "B. Demirel, V. Gupta, D. E. Quevedo and M. Johansson",
     venue: "WODES", // WODES
     year: 2016,
-    link: "#",
+    link: "https://doi.org/10.1109/WODES.2016.7497849",
     summary:
       "Optimal threshold design for multi-loop event-triggered control systems.",
     type: "conference",
@@ -557,7 +557,7 @@ export const publications: Publication[] = [
       "B. Demirel, H. R. Feyzmahdavian, E. Ghadimi and M. Johansson",
     venue: "IFAC NECSYS",
     year: 2015,
-    link: "#",
+    link: "https://doi.org/10.1016/j.ifacol.2015.10.312",
     summary:
       "Stability conditions for discrete-time linear systems subject to unbounded stochastic communication delays.",
     type: "conference",
@@ -585,7 +585,7 @@ export const publications: Publication[] = [
     venue: "European Control Conference",
     venueShort: "ECC",
     year: 2015,
-    link: "#",
+    link: "https://doi.org/10.1109/ECC.2015.7330666",
     summary:
       "Optimal retransmission policies for wireless networked control systems balancing latency and reliability.",
     type: "conference",
@@ -612,7 +612,7 @@ export const publications: Publication[] = [
     venue: "European Control Conference",
     venueShort: "ECC",
     year: 2013,
-    link: "#",
+    link: "https://doi.org/10.23919/ECC.2013.6669798",
     summary:
       "Trade-off characterization for event-triggered control operating over lossy communication networks.",
     type: "conference",
@@ -639,7 +639,7 @@ export const publications: Publication[] = [
     venue: "IEEE Conference on Decision and Control",
     venueShort: "IEEE CDC",
     year: 2012,
-    link: "#",
+    link: "https://doi.org/10.1109/CDC.2012.6426253",
     summary:
       "Energy-optimal packet forwarding strategies maintaining LQG control performance in wireless systems.",
     type: "conference",
@@ -665,7 +665,7 @@ export const publications: Publication[] = [
     authors: "B. Demirel, C. Briat and M. Johansson",
     venue: "IFAC ADHS",
     year: 2012,
-    link: "#",
+    link: "https://doi.org/10.3182/20120606-3-NL-3011.00095",
     summary:
       "Supervisory control framework for networked systems handling time-varying delays.",
     type: "conference",
@@ -692,7 +692,7 @@ export const publications: Publication[] = [
     authors: "B. Demirel, Z. Zou, P. Soldati and M. Johansson",
     venue: "IEEE CDC",
     year: 2011,
-    link: "#",
+    link: "https://doi.org/10.1109/CDC.2011.6160996",
     summary:
       "Joint controller and communication schedule co-design for WirelessHART industrial networks.",
     type: "conference",
@@ -717,7 +717,7 @@ export const publications: Publication[] = [
     authors: "B. Demirel and L. Guvenç",
     venue: "ASME ESDA",
     year: 2010,
-    link: "#",
+    link: "https://doi.org/10.1115/ESDA2010-24631",
     summary:
       "Interactive computer-aided toolbox for mechatronic control system design.",
     type: "conference",
@@ -745,7 +745,7 @@ export const publications: Publication[] = [
     authors: "S. Necipoglu, B. Demirel and L. Guvenç",
     venue: "ASME ESDA",
     year: 2010,
-    link: "#",
+    link: "https://doi.org/10.1115/ESDA2010-24499",
     summary:
       "Robust repetitive control design enabling fast atomic force microscope scanning.",
     type: "conference",
@@ -774,7 +774,7 @@ export const publications: Publication[] = [
       "B. Demirel, M. T. Emirler, A. Yorukoglu, N. Koca and U. Sonmez",
     venue: "ASME IMECE",
     year: 2008,
-    link: "#",
+    link: "https://doi.org/10.1115/IMECE2008-68796",
     summary:
       "Design of a compliant mechanism generating specified impact and contact forces.",
     type: "conference",

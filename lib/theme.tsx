@@ -15,6 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Theme is restored from localStorage after mount.
       setTheme(stored);
       document.documentElement.setAttribute("data-theme", stored);
     }

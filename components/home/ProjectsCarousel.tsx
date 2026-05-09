@@ -4,7 +4,6 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
-import { projectCards, type ProjectCardData } from "@/content/projectCards";
 import { copy } from "@/content/copy";
 
 interface CarouselCardContent {
@@ -214,8 +213,14 @@ export function ProjectsCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  const hasDragged = useRef(false);
   const startX = useRef(0);
   const scrollLeftPos = useRef(0);
+  const rafId = useRef(0);
+
+  useEffect(() => {
+    return () => cancelAnimationFrame(rafId.current);
+  }, []);
 
   const scrollToIndex = useCallback((index: number) => {
     const container = scrollRef.current;
@@ -239,33 +244,42 @@ export function ProjectsCarousel() {
   }, [activeIndex, scrollToIndex]);
 
   const handleScroll = useCallback(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const cards = container.querySelectorAll<HTMLElement>("[data-card]");
-    let closestIndex = 0;
-    let closestDistance = Infinity;
-    cards.forEach((card, i) => {
-      const distance = Math.abs(
-        card.offsetLeft - container.scrollLeft - container.offsetLeft
-      );
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = i;
-      }
+    cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      const container = scrollRef.current;
+      if (!container) return;
+      const cards = container.querySelectorAll<HTMLElement>("[data-card]");
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      cards.forEach((card, i) => {
+        const distance = Math.abs(
+          card.offsetLeft - container.scrollLeft - container.offsetLeft
+        );
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = i;
+        }
+      });
+      setActiveIndex(closestIndex);
     });
-    setActiveIndex(closestIndex);
   }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     isDragging.current = true;
-    startX.current = e.pageX - (scrollRef.current?.offsetLeft || 0);
+    hasDragged.current = false;
+    const rect = scrollRef.current?.getBoundingClientRect();
+    startX.current = e.pageX - (rect?.left ?? 0);
     scrollLeftPos.current = scrollRef.current?.scrollLeft || 0;
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging.current || !scrollRef.current) return;
+    const rect = scrollRef.current.getBoundingClientRect();
+    const x = e.pageX - rect.left;
+    const delta = Math.abs(x - startX.current);
+    if (delta < 5) return;
+    hasDragged.current = true;
     e.preventDefault();
-    const x = e.pageX - (scrollRef.current.offsetLeft || 0);
     const walk = (x - startX.current) * 1.2;
     scrollRef.current.scrollLeft = scrollLeftPos.current - walk;
   }, []);
@@ -274,14 +288,26 @@ export function ProjectsCarousel() {
     isDragging.current = false;
   }, []);
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "ArrowRight") handleNext();
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [handlePrev, handleNext]);
+  const handleClickCapture = useCallback((e: React.MouseEvent) => {
+    if (hasDragged.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      hasDragged.current = false;
+    }
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      }
+    },
+    [handlePrev, handleNext]
+  );
 
   return (
     <Section id="projects">
@@ -323,12 +349,15 @@ export function ProjectsCarousel() {
       {/* Desktop: Carousel track */}
       <div
         ref={scrollRef}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className="hidden md:flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+        onClickCapture={handleClickCapture}
+        className="hidden md:flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 focus-visible:rounded-[var(--radius-sm)]"
         role="region"
         aria-label="Projects carousel"
       >
